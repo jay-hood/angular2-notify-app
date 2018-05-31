@@ -1,3 +1,3 @@
 export class Item {
-  constructor(public content: string, public doByTime: Date) {}
+  constructor(public title: string, public date: Date, public details: string) {}
 }

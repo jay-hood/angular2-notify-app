@@ -1,11 +1,17 @@
 <div class="row">
-  <div class="col-xs-12">
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="item">Item: </label>
-        <input type="text" id="item-description" class="form-control">
-      </div>
-      <button class="btn btn-success" type="submit">Submit</button>
-    </form>
+  <div class="col-sm-6">
+    <br>
+    <br>
+    <div class="float-left">
+      <ul class="list-group">
+        <app-to-do-item-list *ngFor="let item of items;
+        let i = index" [index]="i" [item]="item">
+        </app-to-do-item-list>
+      </ul>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <router-outlet></router-outlet>
+    <!-- <app-add-item></app-add-item> -->
   </div>
 </div>

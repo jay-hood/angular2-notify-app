@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <div class="form-group">
+    <br>
+    <label for="item">Item:</label>
+    <div class="input-group">
+      <input type="text"
+      id="item-name"
+      class="form-control"
+      name="title"
+      ngModel>
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default">Add Details</button>
+      </span>
+    </div>
+    <br>
+    <label for="details">Details:</label>
+    <textarea name="details" rows="4" class="form-control" ngModel></textarea>
+  </div>
+  <button class="btn btn-success float-left" type="submit">Submit</button>
+</form>
