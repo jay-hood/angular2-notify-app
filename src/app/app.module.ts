@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToDoItemListComponent } from './to-do-list/to-do-item-list/to-do-item-list.component';
 import { PlaceholderComponent } from './shared/placeholder/placeholder.component';
+import { DropdownDirective } from './shared/directives/dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PlaceholderComponent } from './shared/placeholder/placeholder.component
     HeaderComponent,
     SidebarComponent,
     ToDoItemListComponent,
-    PlaceholderComponent
+    PlaceholderComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,

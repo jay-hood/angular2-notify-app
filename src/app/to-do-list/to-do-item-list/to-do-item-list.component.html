@@ -1,1 +1,14 @@
-<a [routerLink]="['item', index]" class="list-group-item">{{item.title}}</a>
+<li class="list-group-item clearfix">
+  <a class="item-title" [routerLink]="['item', index]">
+      {{item.title}}
+  </a>
+  <!-- Note, you might need ngBootstrap to use dropdown directives.
+  Consult the oracle tomorrow  -->
+  <div class="btn-group float-right" dropdown>
+    <button type="button" class="btn btn-primary dropdown-toggle">Manage Item <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a style="cursor: pointer">Edit</a></li>
+      <li><a style="cursor: pointer">Delete</a></li>
+    </ul>
+  </div>
+</li>
