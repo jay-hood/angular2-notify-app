@@ -3,3 +3,7 @@ ul {
   display: table;
   table-layout: fixed;
 }
+
+.btn-space {
+  margin-right: 5px;
+}

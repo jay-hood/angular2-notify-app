@@ -7,7 +7,7 @@ import { PlaceholderComponent } from '../placeholder/placeholder.component';
 const appRoutes: Routes = [
   {'path': '', component: PlaceholderComponent},
   {'path': 'item/:itemNumber', component: ToDoItemComponent}
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],

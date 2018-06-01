@@ -1,33 +1,38 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, Input, EventEmitter } from '@angular/core';
 import { ToDoListService } from '../../shared/services/to-do-list.service';
 import { Item } from '../../shared/models/item.model';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
   selector: 'app-to-do-item',
   templateUrl: './to-do-item.component.html',
-  styleUrls: ['./to-do-item.component.css'],
-  providers: [ToDoListService]
+  styleUrls: ['./to-do-item.component.css']
 })
-export class ToDoItemComponent implements OnInit {
+export class ToDoItemComponent implements OnInit, OnDestroy {
 
+  itemNumber: number;
   item: Item;
+  paramsSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
-    private toDoListService: ToDoListService) { }
+    private toDoListService: ToDoListService) {
+    }
+
 
   ngOnInit() {
-    this.item = this.toDoListService
-    .getItem(+this.route.snapshot.params['itemNumber']);
+    this.paramsSubscription = this.route.params.subscribe( params => {
+      this.itemNumber = +params['itemNumber'];
+      this.item = this.toDoListService.getItem(this.itemNumber);
+      console.log(this.item);
+    });
+    }
 
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.item = this.toDoListService
-        .getItem(+this.route.snapshot.params['itemNumber']);
-      }
-    )
+    ngOnDestroy() {
+      this.paramsSubscription.unsubscribe();
+    }
 
-  }
+
 
 }

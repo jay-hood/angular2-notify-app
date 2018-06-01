@@ -13,6 +13,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToDoItemListComponent } from './to-do-list/to-do-item-list/to-do-item-list.component';
 import { PlaceholderComponent } from './shared/placeholder/placeholder.component';
 import { DropdownDirective } from './shared/directives/dropdown.directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DropdownDirective } from './shared/directives/dropdown.directive';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

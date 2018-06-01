@@ -1,19 +1,19 @@
-<div class="row">
-  <div class="col-sm-6">
-    <br>
-    <span class="input-group-btn">
-      <button type="button" class="btn btn-primary">New Item</button>
-    </span>
-    <div class="float-left">
-      <ul class="list-group">
-        <app-to-do-item-list *ngFor="let item of items;
-        let i = index" [index]="i" [item]="item">
-        </app-to-do-item-list>
-      </ul>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <router-outlet></router-outlet>
-    <!-- <app-add-item></app-add-item> -->
-  </div>
+<br>
+<span class="input-group-btn">
+  <button type="button" class="btn btn-primary">New Item</button>
+</span>
+<div>
+    <ngb-accordion [closeOthers]="true" activeIds="accordion-panel-1"
+    (panelChange)="onPanelChange($event)">
+      <ngb-panel *ngFor="let item of items;
+      let i = index" title="{{item.title}}"
+      id="{{i}}">
+          <ng-template ngbPanelContent>
+            <div class="float-right">
+              <button class="btn btn-danger btn-space" (click)="onDelete()">Delete</button>
+              <button class="btn btn-success" (click)="onEdit()">Edit</button>
+            </div>
+          </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Item } from './shared/models/item.model';
 
 @Component({
   selector: 'app-root',
