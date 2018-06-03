@@ -26,7 +26,9 @@ export class ToDoListComponent implements OnInit {
   onPanelChange(event: NgbPanelChangeEvent) {
     // this.itemSelectedEvent.emit(this.toDoListService.getItem(+event.panelId));
     this.index = +event.panelId;
-    this.router.navigate(['item', +event.panelId]);
+    // Need some way of giving a warning when navigating between panels if
+    // the user is in the middle of editing.
+    this.router.navigate(['item', this.index]);
   }
 
   onDelete() {
@@ -36,6 +38,7 @@ export class ToDoListComponent implements OnInit {
 
   onEdit() {
     console.log('edit button clicked');
+    this.router.navigate(['item/edit', this.index]);
   }
 
   ngOnInit() {

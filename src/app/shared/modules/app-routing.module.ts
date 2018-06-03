@@ -3,10 +3,12 @@ import { Routes, RouterModule, ActivatedRoute, PreloadAllModules } from '@angula
 import { ToDoListComponent } from '../../to-do-list/to-do-list.component';
 import { ToDoItemComponent } from '../../to-do-list/to-do-item/to-do-item.component';
 import { PlaceholderComponent } from '../placeholder/placeholder.component';
+import { EditItemComponent } from '../../to-do-list/edit-item/edit-item.component';
 
 const appRoutes: Routes = [
   {'path': '', component: PlaceholderComponent},
-  {'path': 'item/:itemNumber', component: ToDoItemComponent}
+  {'path': 'item/:itemNumber', component: ToDoItemComponent},
+  {'path': 'item/edit/:itemNumber', component: EditItemComponent}
 ];
 
 @NgModule({
