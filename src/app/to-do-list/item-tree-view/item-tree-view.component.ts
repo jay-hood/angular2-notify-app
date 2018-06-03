@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Item } from '../../shared/models/item.model';
+import { Details } from '../../shared/models/details.model';
 
 @Component({
   selector: 'app-item-tree-view',
@@ -8,7 +8,7 @@ import { Item } from '../../shared/models/item.model';
 
 export class ItemTreeViewComponent{
 
-  @Input() items: Array<Item>;
+  @Input() details: Array<Details>;
 
 
 

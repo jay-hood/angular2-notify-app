@@ -1,3 +1,12 @@
-<p>
-  item-tree-view works!
-</p>
+<ul>
+    <li *ngFor="let detail of details">
+        <span><input type="checkbox" [checked]="details.checked" (click)="details.check()"    /></span>
+        <span (click)="details.toggle()">Details</span>
+        <div *ngIf="details.expanded">
+            <ul >
+                <li *ngFor="let detail of details.details">{{file}}</li>
+            </ul>
+            <tree-view [details]="details.details"></tree-view>
+        </div>
+    </li>
+</ul>
