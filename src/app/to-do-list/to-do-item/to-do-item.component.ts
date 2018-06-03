@@ -12,12 +12,14 @@ import { Subscription } from 'rxjs';
 })
 export class ToDoItemComponent implements OnInit, OnDestroy {
 
+  isCollapsed: boolean;
   itemNumber: number;
   item: Item;
   paramsSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
     private toDoListService: ToDoListService) {
+      this.isCollapsed = true;
     }
 
 
