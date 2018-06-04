@@ -15,7 +15,7 @@ export class ToDoItemComponent implements OnInit, OnDestroy {
   // firstItemOneDetails: Details;
   // @Input() details: Details[] = [];
   isCollapsed: boolean;
-  detailsInitialized: boolean = false;
+  detailsInitialized = false;
   itemNumber: number;
   item: Item;
   @Input() items: Item[] = [];

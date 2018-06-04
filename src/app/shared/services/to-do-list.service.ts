@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class ToDoListService {
 
-  private currentMaxId: number = -1;
+  private currentMaxId = -1;
   listUpdated = new Subject<Item[]>();
 
   firstItemOneDetails: Item = new Item(2,
@@ -14,7 +14,7 @@ export class ToDoListService {
     [new Item(3,
       'detail one-one',
       new Date,
-        [new Item(4,'detail one-one-one', new Date)]
+        [new Item(4, 'detail one-one-one', new Date)]
       )
     ]
   );
@@ -24,7 +24,7 @@ export class ToDoListService {
     [new Item(7,
       'detail two-one',
       new Date,
-        [new Item(8,'detail two-one-one', new Date)]
+        [new Item(8, 'detail two-one-one', new Date)]
       )
     ]
   );
@@ -34,7 +34,7 @@ export class ToDoListService {
     [new Item(11,
       'detail three-one',
       new Date,
-        [new Item(12,'detail three-one-one', new Date)]
+        [new Item(12, 'detail three-one-one', new Date)]
       )
     ]
   );
@@ -62,9 +62,9 @@ export class ToDoListService {
 
   recursiveChildDelete(items: Item[], index: number) {
     items.forEach( element => {
-      if(element.id==index){
+      if (element.id === index) {
         element.items = [];
-      } else if(element.items) {
+      } else if (element.items) {
         this.recursiveChildDelete(element.items, index);
       }
     });
@@ -72,9 +72,9 @@ export class ToDoListService {
 
   getMaxId(items: Item[]) {
     this.items.forEach( element => {
-      if(element.id>this.currentMaxId){
+      if (element.id > this.currentMaxId) {
         this.currentMaxId = element.id;
-      } else if(element.items){
+      } else if (element.items) {
         this.getMaxId(element.items);
       }
     });
