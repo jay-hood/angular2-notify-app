@@ -21,7 +21,9 @@ export class ToDoListComponent implements OnInit {
 
   constructor(
     private toDoListService: ToDoListService,
-    private router: Router) {}
+    private router: Router) {
+
+    }
 
   onPanelChange(event: NgbPanelChangeEvent) {
     // this.itemSelectedEvent.emit(this.toDoListService.getItem(+event.panelId));

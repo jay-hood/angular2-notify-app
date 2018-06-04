@@ -6,7 +6,7 @@
     <ngb-accordion [closeOthers]="true" activeIds="accordion-panel-1"
     (panelChange)="onPanelChange($event)">
       <ngb-panel *ngFor="let item of items;
-      let i = index" title="{{item.title}}"
+      let i = index" title="{{item.details}}"
       id="{{i}}">
           <ng-template ngbPanelContent>
             <div class="float-right">

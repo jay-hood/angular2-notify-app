@@ -32,8 +32,7 @@ export class EditItemComponent implements OnInit {
 
   onClear() {
     this.itemForm = new FormGroup({
-      title: new FormControl('', Validators.maxLength(60)),
-      detalis: new FormControl('', Validators. maxLength(300))
+      details: new FormControl('', Validators.maxLength(300))
     })
   }
 
@@ -44,7 +43,6 @@ export class EditItemComponent implements OnInit {
     //to be a very interesting endeavor
     if(this.editMode){
       const itemForm = new FormGroup({
-        title: new FormControl(item.title, Validators.maxLength(60)),
         details: new FormControl(item.details, Validators.maxLength(300))
       });
       this.itemForm = itemForm;

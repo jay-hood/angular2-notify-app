@@ -17,8 +17,8 @@ export class AddItemComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const newItem = new Item(value.title, new Date(), value.details);
-    this.toDoListService.addItem(newItem);
+    // const newItem = new Item(value.title, new Date(), value.details);
+    // this.toDoListService.addItem(newItem);
     form.reset();
   }
 

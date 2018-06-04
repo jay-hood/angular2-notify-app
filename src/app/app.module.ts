@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import {FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './shared/modules/app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { ToDoListService } from './shared/services/to-do-list.service';
 import { AppComponent } from './app.component';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { ToDoItemComponent } from './to-do-list/to-do-item/to-do-item.component';
@@ -40,7 +40,7 @@ import { ItemTreeViewComponent } from './to-do-list/item-tree-view/item-tree-vie
     ReactiveFormsModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [ToDoListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,41 @@
-<br>
+<div *ngFor="let item of items">
+  <ul>
+    <li> {{item.details}}
+      <br>
+      <button class="btn btn-outline-primary" (click)="onEdit(item.id)">Edit</button>
+      <button class="btn btn-outline-danger" (click)="onDelete(item.id)">Delete</button>
+      <button class="btn btn-outline-danger" (click)="onDeleteChildren(item.id)">
+        Delete Children</button>
+       <app-to-do-item [items]="item.items">
+       </app-to-do-item>
+    </li>
+<!--A superior option might be to have an edit mode for the entire item and all its children,
+not just each individual one-->
+  </ul>
+</div>
+<!-- <h4 class="list-group-item-heading text-lg-left">
+  <a (click)="isCollapsed = !isCollapsed">{{item.title}}</a>
+</h4> -->
+<!-- <div *ngFor="let detail of details">
+  <div [ngbCollapse]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <p (click)="isCollapsed = !isCollapsed" class="list-group-item-text text-md-left">
+          {{detail.description}}</p>
+          <app-to-do-item [details]="detail.details">
+          </app-to-do-item>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- {{detail.description}} -->
+<!-- <br>
 <h4 class="list-group-item-heading text-lg-left">
-  <!-- <button class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed">
+  <button class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed">
   {{item.title}}
-  </button> -->
+  </button>
   <a (click)="isCollapsed = !isCollapsed">{{item.title}}</a>
 </h4>
 <div [ngbCollapse]="isCollapsed">
@@ -11,7 +44,7 @@
       <p class="list-group-item-text text-md-left">{{item.details}}</p>
     </div>
   </div>
-</div>
+</div> -->
 <!-- <p>
   <button type="button" class="btn btn-outline-primary"
   (click)="isCollapsed = !isCollapsed"

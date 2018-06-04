@@ -7,8 +7,9 @@ import { EditItemComponent } from '../../to-do-list/edit-item/edit-item.componen
 
 const appRoutes: Routes = [
   {'path': '', component: PlaceholderComponent},
+  {'path': 'item/new', component: EditItemComponent},
   {'path': 'item/:itemNumber', component: ToDoItemComponent},
-  {'path': 'item/edit/:itemNumber', component: EditItemComponent}
+  {'path': 'item/:itemNumber/edit', component: EditItemComponent}
 ];
 
 @NgModule({
