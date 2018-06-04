@@ -1,3 +1,20 @@
-<p>
-  header works!
-</p>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
+  <div class="container-fluid">
+      <a href="#" class="navbar-brand">To Do List</a>
+    <div class="navbar-default">
+      <ul class="navbar-nav">
+        <li class="nav-item" routerLink="active">
+          <a class="nav-link" routerLink="">Home</a>
+        </li>
+        <li class="nav-link"> | </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="active" routerLink="">Login</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" style="cursor: pointer;" (click)="onLogout()" *ngIf="false">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

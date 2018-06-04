@@ -20,16 +20,20 @@ export class ToDoItemComponent implements OnInit, OnDestroy {
   item: Item;
   @Input() items: Item[] = [];
   paramsSubscription: Subscription;
+  itemSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
     private toDoListService: ToDoListService) {
       // this.isCollapsed = true;
       this.paramsSubscription = this.route.params.subscribe( params => {
        this.itemNumber = +params['itemNumber'];
-       this.item = this.toDoListService.getItem(this.itemNumber);
-       this.items = this.item.items;
-       console.log(this.items);
      });
+     this.items = this.toDoListService.getItem(this.itemNumber).items;
+     // this.items = this.item.items;
+
+
+       // adding this subscription appears to fix the delete problem
+       // the child-delete, however, seems to be broken
     }
 
   onEdit() {
@@ -37,7 +41,7 @@ export class ToDoItemComponent implements OnInit, OnDestroy {
   }
 
   onDelete(index: number) {
-
+    this.toDoListService.deleteItemAndShiftChildren(index);
   }
 
   onDeleteChildren(index: number) {
@@ -47,16 +51,16 @@ export class ToDoItemComponent implements OnInit, OnDestroy {
 // One issue is that I might need to update that subscription. Maybe. I don't know
 // About the benefits or drawbacks of subscribing in the constructor vs. onInit.
   ngOnInit() {
-    // this.paramsSubscription = this.route.params.subscribe( params => {
-    //   this.itemNumber = +params['itemNumber'];
-    //   this.item = this.toDoListService.getItem(this.itemNumber);
-    //   this.initializeDetails();
-    //   console.log(this.details);
-    // });
+  this.itemSubscription = this.toDoListService.listUpdated.subscribe(
+    (items: Item[]) => {
+      this.items = items[this.itemNumber].items;
+    });
+
+
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    // this.paramsSubscription.unsubscribe();
   }
 
 

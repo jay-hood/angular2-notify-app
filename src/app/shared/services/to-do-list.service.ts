@@ -7,6 +7,7 @@ export class ToDoListService {
 
   private currentMaxId = -1;
   listUpdated = new Subject<Item[]>();
+  temp: Item = null;
 
   firstItemOneDetails: Item = new Item(2,
     'detail one',
@@ -14,7 +15,12 @@ export class ToDoListService {
     [new Item(3,
       'detail one-one',
       new Date,
-        [new Item(4, 'detail one-one-one', new Date)]
+        [new Item(4,
+          'detail one-one-one',
+          new Date,
+          [new Item(13,
+            'detail one-one-one-one',
+            new Date)])]
       )
     ]
   );
@@ -51,13 +57,14 @@ export class ToDoListService {
   }
 
   deleteChildItems(index: number) {
-
     this.recursiveChildDelete(this.items, index);
     this.listUpdated.next(this.items.slice());
   }
 
   deleteItemAndShiftChildren(index: number) {
-
+    console.log(index);
+    this.recursiveChildShift(this.items, this.items[0], index);
+    this.listUpdated.next(this.items.slice());
   }
 
   recursiveChildDelete(items: Item[], index: number) {
@@ -66,6 +73,19 @@ export class ToDoListService {
         element.items = [];
       } else if (element.items) {
         this.recursiveChildDelete(element.items, index);
+      }
+    });
+  }
+
+  recursiveChildShift(items: Item[], oldItem: Item, index: number) {
+    items.forEach( element => {
+      if (element.id === index) {
+        console.log('target reached ' + element.id);
+        oldItem.items = element.items;
+      } else if (element.items) {
+        oldItem = element;
+        console.log(oldItem);
+        this.recursiveChildShift(element.items, oldItem, index);
       }
     });
   }
