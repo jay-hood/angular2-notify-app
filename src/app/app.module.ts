@@ -17,6 +17,7 @@ import { DropdownDirective } from './shared/directives/dropdown.directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditItemComponent } from './to-do-list/edit-item/edit-item.component';
 import { ItemTreeViewComponent } from './to-do-list/item-tree-view/item-tree-view.component';
+import { ItemRootComponent } from './to-do-list/to-do-item/item-root/item-root.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ItemTreeViewComponent } from './to-do-list/item-tree-view/item-tree-vie
     PlaceholderComponent,
     DropdownDirective,
     EditItemComponent,
-    ItemTreeViewComponent
+    ItemTreeViewComponent,
+    ItemRootComponent
   ],
   imports: [
     BrowserModule,

@@ -10,59 +10,27 @@ import { Subscription } from 'rxjs';
   templateUrl: './to-do-item.component.html',
   styleUrls: ['./to-do-item.component.css']
 })
-export class ToDoItemComponent implements OnInit, OnDestroy {
-
-  // firstItemOneDetails: Details;
-  // @Input() details: Details[] = [];
-  isCollapsed: boolean;
-  detailsInitialized = false;
-  itemNumber: number;
-  item: Item;
+export class ToDoItemComponent{
   @Input() items: Item[] = [];
-  paramsSubscription: Subscription;
-  itemSubscription: Subscription;
-
-  constructor(private route: ActivatedRoute,
-    private toDoListService: ToDoListService) {
-      // this.isCollapsed = true;
-      this.paramsSubscription = this.route.params.subscribe( params => {
-       this.itemNumber = +params['itemNumber'];
-     });
-     this.items = this.toDoListService.getItem(this.itemNumber).items;
-     // this.items = this.item.items;
+  @Input() prevItem: Item;
+  creationNumber: number;
+  listSubscription: Subscription;
+  constructor(private list: ToDoListService) {
 
 
-       // adding this subscription appears to fix the delete problem
-       // the child-delete, however, seems to be broken
-    }
-
-  onEdit() {
-
+    // this.creationNumber = this.list.getCreationNumber();
+    // this.list.incrementCreationNumber();
   }
 
+
   onDelete(index: number) {
-    this.toDoListService.deleteItemAndShiftChildren(index);
+    this.list.deleteItemAndShiftChildren(index);
   }
 
   onDeleteChildren(index: number) {
-    this.toDoListService.deleteChildItems(index);
+    this.list.deleteChildItems(index);
+    console.log(index);
   }
-
-// One issue is that I might need to update that subscription. Maybe. I don't know
-// About the benefits or drawbacks of subscribing in the constructor vs. onInit.
-  ngOnInit() {
-  this.itemSubscription = this.toDoListService.listUpdated.subscribe(
-    (items: Item[]) => {
-      this.items = items[this.itemNumber].items;
-    });
-
-
-  }
-
-  ngOnDestroy() {
-    // this.paramsSubscription.unsubscribe();
-  }
-
 
 
 }

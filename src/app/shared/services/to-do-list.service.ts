@@ -6,50 +6,17 @@ import { Subject } from 'rxjs';
 export class ToDoListService {
 
   private currentMaxId = -1;
-  listUpdated = new Subject<Item[]>();
+  listUpdated: Subject<Item[]> = new Subject<Item[]>();
   temp: Item = null;
 
-  firstItemOneDetails: Item = new Item(2,
-    'detail one',
-    new Date,
-    [new Item(3,
-      'detail one-one',
-      new Date,
-        [new Item(4,
-          'detail one-one-one',
-          new Date,
-          [new Item(13,
-            'detail one-one-one-one',
-            new Date)])]
-      )
-    ]
-  );
-  secondItemOneDetails: Item = new Item(6,
-    'detail two',
-    new Date,
-    [new Item(7,
-      'detail two-one',
-      new Date,
-        [new Item(8, 'detail two-one-one', new Date)]
-      )
-    ]
-  );
-  thirdItemOneDetails: Item = new Item(10,
-    'detail three',
-    new Date,
-    [new Item(11,
-      'detail three-one',
-      new Date,
-        [new Item(12, 'detail three-one-one', new Date)]
-      )
-    ]
-  );
 
+  itemFour = new Item(5,'detail four',new Date);
+  itemThree = new Item(4,'detail three',new Date,[this.itemFour]);
+  itemTwo = new Item(3,'detail two',new Date,[this.itemThree]);
+  itemOne = new Item(2, 'detail one', new Date, [this.itemTwo]);
 
   private items: Item[] = [
-    new Item(1, 'test item 1', new Date(), [this.firstItemOneDetails]),
-    new Item(5, 'test item 2', new Date(), [this.secondItemOneDetails]),
-    new Item(9, 'test item 3', new Date(), [this.thirdItemOneDetails])
+    new Item(1, 'test item 1', new Date(), [this.itemOne])
   ];
 
   getItems() {
@@ -70,7 +37,12 @@ export class ToDoListService {
   recursiveChildDelete(items: Item[], index: number) {
     items.forEach( element => {
       if (element.id === index) {
-        element.items = [];
+        console.log('element to be cleared reached: ' + element.id);
+        // element.items = [];
+        if(element.items){
+          delete element.items;
+        }
+        return;
       } else if (element.items) {
         this.recursiveChildDelete(element.items, index);
       }
@@ -79,12 +51,26 @@ export class ToDoListService {
 
   recursiveChildShift(items: Item[], oldItem: Item, index: number) {
     items.forEach( element => {
+      // if the id of the element to be deleted is found
       if (element.id === index) {
-        console.log('target reached ' + element.id);
+      //if the deleted element is the root node
+        if(oldItem==element){
+          if(element.items){
+            this.items = element.items;
+            console.log(this.items);
+            return;
+          } else {
+            this.items = [];
+            console.log('this should be an empty array')
+            console.log(this.items);
+            return;
+          }
+
+        }
         oldItem.items = element.items;
+        return;
       } else if (element.items) {
         oldItem = element;
-        console.log(oldItem);
         this.recursiveChildShift(element.items, oldItem, index);
       }
     });
