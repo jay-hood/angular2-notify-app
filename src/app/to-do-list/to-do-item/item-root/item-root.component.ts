@@ -5,12 +5,15 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-item-root',
-    template: `<app-to-do-item [items]="items"></app-to-do-item>`
+    // template: `<app-to-do-item [items]="items"></app-to-do-item>`
+    templateUrl: 'item-root.component.html'
 })
 export class ItemRootComponent implements OnInit {
 
   items: Item[] = [];
   routingNumber: number;
+  editMode = false;
+  editModeStr: string;
 
 
   listSubscription: Subscription;
@@ -21,7 +24,7 @@ export class ItemRootComponent implements OnInit {
       params => {
         this.routingNumber = +params['itemNumber'];
       }
-    )
+    );
     this.listSubscription = this.list.listUpdated.subscribe(
       (items: Item[]) => {
         this.items = items;
@@ -32,8 +35,18 @@ export class ItemRootComponent implements OnInit {
     this.items = this.list.getItems();
   }
 
-  ngOnInit() {
-
+  editToggle() {
+    this.editMode = !this.editMode;
+    if (this.editMode) {
+      this.editModeStr = 'ON';
+    } else {
+      this.editModeStr = 'OFF';
+    }
   }
+
+  ngOnInit() {
+    this.editModeStr = 'OFF';
+  }
+
 
 }

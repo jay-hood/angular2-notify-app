@@ -43,6 +43,11 @@ export class ToDoListComponent implements OnInit {
     this.router.navigate(['item/edit', this.index]);
   }
 
+  onAddItem() {
+    console.log('add item button clicked');
+    this.router.navigate(['new']);
+  }
+
   ngOnInit() {
     this.items = this.toDoListService.getItems();
     this.subscription = this.toDoListService.listUpdated.subscribe(
