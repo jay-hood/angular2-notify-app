@@ -49,31 +49,60 @@ export class ToDoListService {
     });
   }
 
+  // recursiveChildShift(items: Item[], oldItem: Item, index: number) {
+  //   items.forEach( element => {
+  //     // if the id of the element to be deleted is found
+  //     if (element.id === index) {
+  //     //if the deleted element is the root node
+  //       if(oldItem==element){
+  //         if(element.items){
+  //           this.items = element.items;
+  //           console.log(this.items);
+  //           return;
+  //         } else {
+  //           this.items = [];
+  //           console.log('this should be an empty array')
+  //           console.log(this.items);
+  //           return;
+  //         }
+  //
+  //       }
+  //       oldItem.items = element.items;
+  //       return;
+  //     } else if (element.items) {
+  //       oldItem = element;
+  //       this.recursiveChildShift(element.items, oldItem, index);
+  //     }
+  //   });
+  // }
   recursiveChildShift(items: Item[], oldItem: Item, index: number) {
-    items.forEach( element => {
-      // if the id of the element to be deleted is found
-      if (element.id === index) {
-      //if the deleted element is the root node
-        if(oldItem==element){
-          if(element.items){
-            this.items = element.items;
-            console.log(this.items);
-            return;
+    items.forEach( item => {
+      console.log('item id: ' + item.id);
+      console.log('old item id: ' + oldItem.id);
+      if(item.items){
+        if(item.id == index){
+          if(item === oldItem) {
+            this.items = item.items;
           } else {
-            this.items = [];
-            console.log('this should be an empty array')
-            console.log(this.items);
-            return;
+            oldItem.items.push(...item.items);
+            oldItem.items.forEach( function(item, value, object) {
+              if(item.id===index) {
+                object.splice(value,1);
+              }
+            });
           }
-
+          // console.log(`item id ${item.id} => old item id ${oldItem.id}`);
+        } else {
+          this.recursiveChildShift(item.items, item, index);
         }
-        oldItem.items = element.items;
-        return;
-      } else if (element.items) {
-        oldItem = element;
-        this.recursiveChildShift(element.items, oldItem, index);
+      } else if(item.id == index) {
+          oldItem.items.forEach( function(item, value, object) {
+            if(item.id===index) {
+              object.splice(value,1);
+            }
+          });
       }
-    });
+    })
   }
 
   getMaxId(items: Item[]) {
