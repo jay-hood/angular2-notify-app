@@ -12,7 +12,7 @@ export class EditItemComponent implements OnInit {
 
   itemNumber: number;
   editMode = false;
-  itemForm: FormGroup
+  itemForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private toDoListService: ToDoListService) { }
 
@@ -26,22 +26,22 @@ export class EditItemComponent implements OnInit {
     );
   }
 
-  onSubmit(){
+  onSubmit() {
 
   }
 
   onClear() {
     this.itemForm = new FormGroup({
       details: new FormControl('', Validators.maxLength(300))
-    })
+    });
   }
 
   initializeForm() {
 
     const item = this.toDoListService.getItem(this.itemNumber);
-    //Creating a form array to contain nested detail properties is going
-    //to be a very interesting endeavor
-    if(this.editMode){
+    // Creating a form array to contain nested detail properties is going
+    // to be a very interesting endeavor
+    if (this.editMode) {
       const itemForm = new FormGroup({
         details: new FormControl(item.details, Validators.maxLength(300))
       });

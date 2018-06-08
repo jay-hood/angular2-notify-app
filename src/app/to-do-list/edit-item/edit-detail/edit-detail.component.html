@@ -1,0 +1,9 @@
+<div *ngFor="let item of items">
+  <ul>
+    <li>
+      <label for="detail">Detail</label>
+      <input type="text" id="name" class="formControl" formControlName="detail">
+    </li>
+  </ul>
+  <app-edit-detail [items]="item.items" *ngIf="item.items"></app-edit-detail>
+</div>
