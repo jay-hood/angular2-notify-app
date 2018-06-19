@@ -9,18 +9,25 @@ export class ToDoListService {
   listUpdated: Subject<Item[]> = new Subject<Item[]>();
   temp: Item = null;
 
-
-  itemFour = new Item(5,'detail four',new Date);
-  itemThree = new Item(4,'detail three',new Date,[this.itemFour]);
-  itemTwo = new Item(3,'detail two',new Date,[this.itemThree]);
+  itemSeven = new Item(6, 'detail seven', new Date);
+  itemSix = new Item(7, 'detail six', new Date, [this.itemSeven]);
+  itemFive = new Item(6, 'detail five', new Date, [this.itemSix]);
+  itemFour = new Item(5, 'detail four', new Date);
+  itemThree = new Item(4, 'detail three', new Date, [this.itemFour]);
+  itemTwo = new Item(3, 'detail two', new Date, [this.itemThree]);
   itemOne = new Item(2, 'detail one', new Date, [this.itemTwo]);
 
   private items: Item[] = [
-    new Item(1, 'test item 1', new Date(), [this.itemOne])
+    new Item(1, 'test item 1', new Date(), [this.itemOne, this.itemFive])
   ];
 
   getItems() {
     return this.items.slice();
+  }
+
+  replaceItem(itemNumber: number, item: Item) {
+    this.items[itemNumber] = item;
+    this.listUpdated.next(this.items.slice());
   }
 
   deleteChildItems(index: number) {
@@ -39,7 +46,7 @@ export class ToDoListService {
       if (element.id === index) {
         console.log('element to be cleared reached: ' + element.id);
         // element.items = [];
-        if(element.items){
+        if (element.items) {
           delete element.items;
         }
         return;
@@ -79,15 +86,15 @@ export class ToDoListService {
     items.forEach( item => {
       console.log('item id: ' + item.id);
       console.log('old item id: ' + oldItem.id);
-      if(item.items){
-        if(item.id == index){
-          if(item === oldItem) {
+      if (item.items) {
+        if (item.id === index) {
+          if (item === oldItem) {
             this.items = item.items;
           } else {
             oldItem.items.push(...item.items);
             oldItem.items.forEach( function(item, value, object) {
-              if(item.id===index) {
-                object.splice(value,1);
+              if (item.id === index) {
+                object.splice(value, 1);
               }
             });
           }
@@ -95,14 +102,14 @@ export class ToDoListService {
         } else {
           this.recursiveChildShift(item.items, item, index);
         }
-      } else if(item.id == index) {
+      } else if (item.id === index) {
           oldItem.items.forEach( function(item, value, object) {
-            if(item.id===index) {
-              object.splice(value,1);
+            if (item.id === index) {
+              object.splice(value, 1);
             }
           });
       }
-    })
+    });
   }
 
   getMaxId(items: Item[]) {
@@ -117,7 +124,8 @@ export class ToDoListService {
   }
 
   getItem(index: number) {
-    return this.items.slice()[index];
+    console.log(this.items.slice()[index]);
+    return this.items.slice(index, index + 1);
   }
 
   addItem(item: Item) {

@@ -1,9 +1,18 @@
-<div *ngFor="let item of items">
-  <ul>
-    <li>
-      <label for="detail">Detail</label>
-      <input type="text" id="name" class="formControl" formControlName="detail">
-    </li>
-  </ul>
-  <app-edit-detail [items]="item.items" *ngIf="item.items"></app-edit-detail>
+<div class="item" [formGroup]="itemForm">
+    <div class="offset-md-{{depth}}">
+      <div class="input-group">
+        <input type="text" [ngStyle]="{'border-color': inputColor}" class="form-control" formControlName="details">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" (click)="onAddChild()">+</button>
+        </span>
+      </div>
+    </div>
+  <div formArrayName="items">
+    <div *ngFor="let item of itemForm.controls.items.controls; let i = index">
+      <div [formGroupName]="i">
+        <app-edit-detail [depth]="depth+1" [itemForm]="itemForm.controls.items.controls[i]">
+        </app-edit-detail>
+      </div>
+    </div>
+  </div>
 </div>

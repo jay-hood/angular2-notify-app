@@ -40,12 +40,12 @@ export class ToDoListComponent implements OnInit {
 
   onEdit() {
     console.log('edit button clicked');
-    this.router.navigate(['item/edit', this.index]);
+    this.router.navigate(['item', this.index, 'edit']);
   }
 
   onAddItem() {
     console.log('add item button clicked');
-    this.router.navigate(['new']);
+    this.router.navigate(['item/new']);
   }
 
   ngOnInit() {

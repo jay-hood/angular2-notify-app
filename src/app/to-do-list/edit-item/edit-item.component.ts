@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToDoListService } from '../../shared/services/to-do-list.service';
 import { ActivatedRoute } from '@angular/router';
+import { Item } from '../../shared/models/item.model';
 
 @Component({
   selector: 'app-edit-item',
@@ -11,42 +12,72 @@ import { ActivatedRoute } from '@angular/router';
 export class EditItemComponent implements OnInit {
 
   itemNumber: number;
-  editMode = false;
   itemForm: FormGroup;
+  items: Item[];
+  depth: number;
+  editMode = false;
+  addableGroup: FormGroup;
 
-  constructor(private route: ActivatedRoute, private toDoListService: ToDoListService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private list: ToDoListService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
       (params) => {
         this.itemNumber = +params['itemNumber'];
         this.editMode = params['itemNumber'] != null;
-        this.initializeForm();
       }
     );
+    if (this.editMode) {
+      this.items = this.list.getItem(this.itemNumber);
+      this.list.listUpdated.subscribe(
+        (items: Item[]) => {
+          this.items[0] = items[this.itemNumber];
+        });
+      this.itemForm = this.fb.group({
+        items: this.initArray(this.items)
+      });
+      this.depth = 0;
+    } else {
+      this.newItem();
+    }
   }
 
-  onSubmit() {
-
-  }
-
-  onClear() {
-    this.itemForm = new FormGroup({
-      details: new FormControl('', Validators.maxLength(300))
+  newItem() {
+    this.depth = 0;
+    this.itemForm = this.fb.group({
+      items: new FormArray([this.fb.group({
+        details: '',
+        items: new FormArray([])
+      })])
     });
   }
 
-  initializeForm() {
 
-    const item = this.toDoListService.getItem(this.itemNumber);
-    // Creating a form array to contain nested detail properties is going
-    // to be a very interesting endeavor
-    if (this.editMode) {
-      const itemForm = new FormGroup({
-        details: new FormControl(item.details, Validators.maxLength(300))
+
+  initArray(items: Item[]): FormArray {
+    const tempArray = new FormArray([]);
+    items.forEach( item => {
+      const tempItem = this.fb.group({
+        details: item.details,
+        items: item.items ? this.initArray(item.items) : []
       });
-      this.itemForm = itemForm;
-    }
+      tempArray.push(tempItem);
+    });
+    return tempArray;
+  }
+
+  onSubmit(form: NgForm) {
+    console.log(form.value);
+    // this doesn't actually work
+    if (this.editMode) {
+    const tempItem = form.value.items[0];
+    this.list.replaceItem(this.itemNumber, tempItem);
+  } else {
+    this.list.addItem(form.value.items[0]);
+  }
 
   }
 

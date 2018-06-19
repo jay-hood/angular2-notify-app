@@ -20,19 +20,7 @@ export class ItemRootComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute, private list: ToDoListService) {
-    this.route.params.subscribe(
-      params => {
-        this.routingNumber = +params['itemNumber'];
-      }
-    );
-    this.listSubscription = this.list.listUpdated.subscribe(
-      (items: Item[]) => {
-        this.items = items;
-        // console.log('subscription triggered: ' + items[0].details);
-        // console.log(this.prevItem);
-      }
-    );
-    this.items = this.list.getItems();
+
   }
 
   editToggle() {
@@ -46,6 +34,21 @@ export class ItemRootComponent implements OnInit {
 
   ngOnInit() {
     this.editModeStr = 'OFF';
+    console.log(this.list.getItem(this.routingNumber));
+    this.route.params.subscribe(
+      params => {
+        this.routingNumber = +params['itemNumber'];
+        this.items = this.list.getItem(this.routingNumber);
+        console.log(this.routingNumber);
+      }
+    );
+    this.listSubscription = this.list.listUpdated.subscribe(
+      (items: Item[]) => {
+        this.items = items.slice(this.routingNumber, this.routingNumber + 1);
+        // console.log('subscription triggered: ' + items[0].details);
+        // console.log(this.prevItem);
+      }
+    );
   }
 
 
