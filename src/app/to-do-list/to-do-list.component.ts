@@ -1,8 +1,10 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Response } from '@angular/http';
 import { Item } from '../shared/models/item.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ToDoListService } from '../shared/services/to-do-list.service';
+import { DataStorageService } from '../shared/services/data-storage.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -21,7 +23,8 @@ export class ToDoListComponent implements OnInit {
 
   constructor(
     private toDoListService: ToDoListService,
-    private router: Router) {
+    private router: Router,
+    private ds: DataStorageService) {
 
     }
 
@@ -35,6 +38,11 @@ export class ToDoListComponent implements OnInit {
 
   onDelete() {
     this.toDoListService.deleteItem(this.index);
+    this.ds.storeNotes().subscribe(
+      (response: Response) => {
+        console.log(response);
+      }
+    );
     this.router.navigate(['']);
   }
 

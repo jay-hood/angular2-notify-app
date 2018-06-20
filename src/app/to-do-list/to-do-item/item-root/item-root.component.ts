@@ -5,8 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-item-root',
-    // template: `<app-to-do-item [items]="items"></app-to-do-item>`
-    templateUrl: 'item-root.component.html'
+  templateUrl: 'item-root.component.html'
 })
 export class ItemRootComponent implements OnInit {
 
@@ -14,8 +13,6 @@ export class ItemRootComponent implements OnInit {
   routingNumber: number;
   editMode = false;
   editModeStr: string;
-
-
   listSubscription: Subscription;
 
 
@@ -34,7 +31,6 @@ export class ItemRootComponent implements OnInit {
 
   ngOnInit() {
     this.editModeStr = 'OFF';
-    console.log(this.list.getItem(this.routingNumber));
     this.route.params.subscribe(
       params => {
         this.routingNumber = +params['itemNumber'];
@@ -45,8 +41,6 @@ export class ItemRootComponent implements OnInit {
     this.listSubscription = this.list.listUpdated.subscribe(
       (items: Item[]) => {
         this.items = items.slice(this.routingNumber, this.routingNumber + 1);
-        // console.log('subscription triggered: ' + items[0].details);
-        // console.log(this.prevItem);
       }
     );
   }

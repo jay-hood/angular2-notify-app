@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToDoListService } from '../../shared/services/to-do-list.service';
+import { DataStorageService } from '../../shared/services/data-storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from '../../shared/models/item.model';
+import { Response } from '@angular/http';
 
 @Component({
   selector: 'app-edit-item',
@@ -21,7 +23,8 @@ export class EditItemComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private list: ToDoListService) { }
+    private list: ToDoListService,
+    private ds: DataStorageService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -73,12 +76,16 @@ export class EditItemComponent implements OnInit {
     console.log(form.value);
     // this doesn't actually work
     if (this.editMode) {
-    const tempItem = form.value.items[0];
-    this.list.replaceItem(this.itemNumber, tempItem);
-  } else {
-    this.list.addItem(form.value.items[0]);
-  }
-
+      const tempItem = form.value.items[0];
+      this.list.replaceItem(this.itemNumber, tempItem);
+    } else {
+      this.list.addItem(form.value.items[0]);
+    }
+    this.ds.storeNotes().subscribe(
+      (response: Response) => {
+        console.log(response);
+      }
+    );
   }
 
 }

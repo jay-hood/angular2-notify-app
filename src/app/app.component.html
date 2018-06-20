@@ -1,20 +1,32 @@
-<app-header></app-header>
+<ng-template [ngIf]="!signedIn" [ngIfElse]="loadApp">
 <div class="container">
+  <br>
   <div class="row">
-    <div class="col-sm-4">
-      <!-- <app-to-do-list (itemSelectedEvent)="selectedItem = $event"></app-to-do-list> -->
-      <app-to-do-list>
-      </app-to-do-list>
-    </div>
-    <div class="col-sm-8">
-      <br>
-      <br>
-      <router-outlet></router-outlet>
-      <!-- <app-to-do-item></app-to-do-item> -->
-      <!-- <app-to-do-item *ngIf="selectedItem; else infoText"></app-to-do-item>
-      <ng-template #infoText>
-        <p>Please select an item.</p>
-      </ng-template> -->
+    <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2">
+      <app-sign-in></app-sign-in>
     </div>
   </div>
 </div>
+</ng-template>
+<ng-template #loadApp>
+  <app-header></app-header>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <!-- <app-to-do-list (itemSelectedEvent)="selectedItem = $event"></app-to-do-list> -->
+        <app-to-do-list>
+        </app-to-do-list>
+      </div>
+      <div class="col-sm-8">
+        <br>
+        <br>
+        <router-outlet></router-outlet>
+        <!-- <app-to-do-item></app-to-do-item> -->
+        <!-- <app-to-do-item *ngIf="selectedItem; else infoText"></app-to-do-item>
+        <ng-template #infoText>
+          <p>Please select an item.</p>
+        </ng-template> -->
+      </div>
+    </div>
+  </div>
+</ng-template>

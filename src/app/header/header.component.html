@@ -8,11 +8,7 @@
         </li>
         <li class="nav-link"> | </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active-link" routerLink="">Login</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" style="cursor: pointer;" (click)="onLogout()" *ngIf="false">Logout</a>
+          <a class="nav-link" style="cursor: pointer;" (click)="onLogout()" *ngIf="signedInStatus">Logout</a>
         </li>
       </ul>
     </div>
