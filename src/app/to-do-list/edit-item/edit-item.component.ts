@@ -52,7 +52,9 @@ export class EditItemComponent implements OnInit {
     this.depth = 0;
     this.itemForm = this.fb.group({
       items: new FormArray([this.fb.group({
+        id: this.list.getMaxId(this.list.getItems()),
         details: '',
+        date: new Date(),
         items: new FormArray([])
       })])
     });
@@ -64,7 +66,9 @@ export class EditItemComponent implements OnInit {
     const tempArray = new FormArray([]);
     items.forEach( item => {
       const tempItem = this.fb.group({
+        id: item.id,
         details: item.details,
+        date: item.date,
         items: item.items ? this.initArray(item.items) : []
       });
       tempArray.push(tempItem);

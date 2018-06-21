@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, OnChanges, Input, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ToDoListService } from '../../shared/services/to-do-list.service';
 import { DataStorageService } from '../../shared/services/data-storage.service';
 import { Item } from '../../shared/models/item.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Response } from '@angular/http';
 
 
 @Component({
@@ -31,12 +32,22 @@ export class ToDoItemComponent {
 
   onDelete(index: number) {
     this.list.deleteItemAndShiftChildren(index);
-    this.ds.storeNotes();
+    this.ds.storeNotes().subscribe(
+      (response: Response) => {
+        console.log(response);
+      }
+    );
+    this.ds.getNotes();
   }
 
   onDeleteChildren(index: number) {
     this.list.deleteChildItems(index);
-    this.ds.storeNotes();
+    this.ds.storeNotes().subscribe(
+      (response: Response) => {
+        console.log(response);
+      }
+    );
+    this.ds.getNotes();
     console.log(index);
   }
 

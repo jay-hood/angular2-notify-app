@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Item } from '../../../shared/models/item.model';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { ToDoListService } from '../../../shared/services/to-do-list.service';
 
 @Component({
   selector: 'app-edit-detail',
@@ -14,7 +15,9 @@ export class EditDetailComponent implements OnInit {
   @Input() editMode: boolean;
   inputColor: string;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private list: ToDoListService) { }
 
   ngOnInit() {
     console.log(this.itemForm);
@@ -60,7 +63,9 @@ export class EditDetailComponent implements OnInit {
 
   onAddChild() {
     (<FormArray>this.itemForm.get('items')).push(this.fb.group({
+      id: this.list.getMaxId(this.list.getItems()),
       details: '',
+      date: new Date(),
       items: new FormArray([])
     }));
   }

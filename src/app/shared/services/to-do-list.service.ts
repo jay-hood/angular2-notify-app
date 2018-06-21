@@ -94,8 +94,10 @@ export class ToDoListService {
         this.getMaxId(element.items);
       }
     });
+    this.currentMaxId++;
     return this.currentMaxId;
   }
+
 
   getItem(index: number) {
     return this.items.slice(index, index + 1);
