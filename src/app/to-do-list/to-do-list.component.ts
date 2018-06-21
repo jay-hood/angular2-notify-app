@@ -34,6 +34,7 @@ export class ToDoListComponent implements OnInit {
     // Need some way of giving a warning when navigating between panels if
     // the user is in the middle of editing.
     this.router.navigate(['item', this.index]);
+    console.log(this.items[this.index]);
   }
 
   onDelete() {
@@ -57,6 +58,7 @@ export class ToDoListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ds.getNotes();
     this.items = this.toDoListService.getItems();
     this.subscription = this.toDoListService.listUpdated.subscribe(
       (items: Item[]) => {

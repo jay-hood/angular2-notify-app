@@ -9,7 +9,7 @@ import * as firebase from 'firebase';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnChanges {
+export class AppComponent implements OnInit {
   title = 'app';
   signedIn: boolean;
 
@@ -22,46 +22,31 @@ export class AppComponent implements OnInit, OnChanges {
     return this.auth.isAuthenticated();
   }
 
-  ngOnChanges() {
-    this.signedIn = this.auth.isAuthenticated();
-    if (this.signedIn) {
-      this.ds.getNotes();
-    }
-  }
-
-
 
   ngOnInit() {
     firebase.initializeApp({
       apiKey: 'AIzaSyCZr9_nph3wdg-59bOGnFp6U-BHj84XtYs',
       authDomain: 'ng-notebook-jay.firebaseapp.com'
     });
-    // firebase.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //     // user.getIdToken().then(function(token) {
-    //     //
-    //     //   // this.auth.setToken(token);
-    //     //   // this.ds.getNotes();
-    //     // });
-    //     console.log(user.email);
-    //     this.signedIn = true;
-    //   } else {
-    //     this.signedIn = false;
+    this.auth.loadUser();
+    // this.auth.signedIn.subscribe(
+    //   value => {
+    //     this.signedIn = value;
     //   }
-    // });
-    this.auth.signedIn.subscribe(
-      value => {
-        this.signedIn = value;
-        if (this.signedIn) {
-          this.ds.getNotes();
-        }
-      }
-    );
-
-    this.signedIn = this.auth.isAuthenticated();
-    if (this.signedIn) {
-      console.log('getting notes?');
-      this.ds.getNotes();
-    }
+    // );
+    // This is always false when the program refreshes, because the token is undefined
+    // at the time this method is called, because it executes BEFORE loadUser
+    console.log('calling firebase auth again');
+    console.log(firebase.auth().currentUser);
+    firebase.auth().onAuthStateChanged(currentUser => {
+      this.signedIn = (currentUser !== null);
+      console.log(this.signedIn);
+    });
+    // if (firebase.auth().currentUser !== null) {
+    //   this.signedIn = true;
+    // } else {
+    //   this.signedIn = false;
+    // }
   }
+
 }

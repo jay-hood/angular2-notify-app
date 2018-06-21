@@ -14,6 +14,24 @@ export class AuthService {
     // });
   }
 
+  loadUser() {
+    firebase.auth().onAuthStateChanged((currentUser) => {
+        console.log(currentUser);
+        if (currentUser === null) {
+            this.token = null;
+        } else {
+            currentUser.getIdToken().then(
+                (token: string) => {
+                  this.token = token;
+                  console.log('token set');
+                  this.signedIn.next(true);
+                }
+            );
+        }
+    });
+  }
+
+
   signinUser(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
@@ -44,11 +62,11 @@ export class AuthService {
     return this.signVal;
   }
 
-  setToken(token: string) {
-    this.token = token;
+  setToken(user) {
   }
 
   isAuthenticated() {
+    console.log(this.token);
     return this.token != null;
   }
 
