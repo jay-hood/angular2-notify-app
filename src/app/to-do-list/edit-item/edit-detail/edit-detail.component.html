@@ -1,10 +1,12 @@
-<div class="item" [formGroup]="itemForm">
-    <div class="offset-md-{{depth}}">
+<div [formGroup]="itemForm">
+    <div class="item offset-md-{{depth}}">
       <div class="input-group">
         <input type="text" [ngStyle]="{'border-color': inputColor}" class="form-control" formControlName="details">
-        <span class="input-group-btn">
+        <div class="btn-toolbar">
           <button class="btn btn-primary" type="button" (click)="onAddChild()">+</button>
-        </span>
+          <button class="btn btn-danger" type="button" (click)="onDelete()">x</button>
+          <button class="btn btn-danger" type="button" (click)="onDeleteChildren()">xv</button>
+        </div>
       </div>
     </div>
   <div formArrayName="items">

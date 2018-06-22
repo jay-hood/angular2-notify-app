@@ -60,9 +60,11 @@ export class ToDoListComponent implements OnInit {
   ngOnInit() {
     this.ds.getNotes();
     this.items = this.toDoListService.getItems();
+    console.log(this.items);
     this.subscription = this.toDoListService.listUpdated.subscribe(
       (items: Item[]) => {
         this.items = items;
+        console.log(this.items);
       }
     );
   }

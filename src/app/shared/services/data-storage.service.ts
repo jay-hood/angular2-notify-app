@@ -19,7 +19,6 @@ export class DataStorageService {
 
   getNotes() {
     const token = this.auth.getToken();
-    console.log('token: ' + token);
     return this.http.get('https://ng-notebook-jay.firebaseio.com/notes.json?auth=' + token)
       .subscribe(
         (response: Response) => {

@@ -1,7 +1,8 @@
 .item {
-  /* border-left: 1px solid black; */
+  margin-bottom: 1px;
 }
 
-input {
-  border: 1px solid;
+
+.btn {
+  margin-right: 1px;
 }

@@ -10,7 +10,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToDoListService } from './shared/services/to-do-list.service';
 import { DataStorageService } from './shared/services/data-storage.service';
 import { AuthService } from './shared/services/auth.service';
-import { AuthGuardService } from './shared/services/auth-guard.service';
 
 import { AppComponent } from './app.component';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
@@ -44,7 +43,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     ReactiveFormsModule,
     NgbModule.forRoot()
   ],
-  providers: [ToDoListService, DataStorageService, AuthService, AuthGuardService],
+  providers: [ToDoListService, DataStorageService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

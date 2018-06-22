@@ -17,16 +17,20 @@ export class ToDoItemComponent {
   @Input() items: Item[] = [];
   @Input() prevItem: Item;
   @Input() editMode: boolean;
+  @Input() isCollapsed = false;
 
+
+  nextCollapse = false;
   creationNumber: number;
   listSubscription: Subscription;
   constructor(
     private list: ToDoListService,
     private config: NgbDropdownConfig,
     private ds: DataStorageService) {
-    this.config.placement = 'right';
-    // this.creationNumber = this.list.getCreationNumber();
-    // this.list.incrementCreationNumber();
+      this.config.placement = 'right';
+      // this.creationNumber = this.list.getCreationNumber();
+      // this.list.incrementCreationNumber();
+      // this.isCollapsed = true;
   }
 
 
@@ -37,7 +41,6 @@ export class ToDoItemComponent {
         console.log(response);
       }
     );
-    this.ds.getNotes();
   }
 
   onDeleteChildren(index: number) {
@@ -47,7 +50,6 @@ export class ToDoItemComponent {
         console.log(response);
       }
     );
-    this.ds.getNotes();
     console.log(index);
   }
 

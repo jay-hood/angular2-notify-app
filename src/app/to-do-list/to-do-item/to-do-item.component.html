@@ -1,68 +1,23 @@
 <div *ngFor="let item of items">
-  <ul>
-    <li> {{item.details}}
-      <br>
-      <div *ngIf="editMode" ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary" ngbDropdownToggle>Options</button>
-        <div ngbDropdownMenu>
-          <button class="dropdown-item" (click)="onEdit(item.id)">Edit</button>
-          <button class="dropdown-item" (click)="onAdd(item.id)">Add</button>
-          <button class="dropdown-item" (click)="onDelete(item.id)">Delete</button>
-          <button class="dropdown-item" (click)="onDeleteChildren(item.id)">
-            Delete Children</button>
-        </div>
-      </div>
-
-       <app-to-do-item [editMode]="editMode" [items]="item.items" *ngIf="item.items">
-       </app-to-do-item>
-    </li>
-<!--A superior option might be to have an edit mode for the entire item and all its children,
-not just each individual one-->
-  </ul>
-</div>
-<!-- <h4 class="list-group-item-heading text-lg-left">
-  <a (click)="isCollapsed = !isCollapsed">{{item.title}}</a>
-</h4> -->
-<!-- <div *ngFor="let detail of details">
   <div [ngbCollapse]="isCollapsed">
-    <div class="card">
-      <div class="card-body">
-        <p (click)="isCollapsed = !isCollapsed" class="list-group-item-text text-md-left">
-          {{detail.description}}</p>
-          <app-to-do-item [details]="detail.details">
+    <ul>
+      <li>
+        <a (click)="nextCollapse = !nextCollapse" class="point">{{item.details}}</a>
+        <!-- <div *ngIf="editMode" ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" ngbDropdownToggle>Options</button>
+          <div ngbDropdownMenu>
+            <button class="dropdown-item" (click)="onEdit(item.id)">Edit</button>
+            <button class="dropdown-item" (click)="onAdd(item.id)">Add</button>
+            <button class="dropdown-item" (click)="onDelete(item.id)">Delete</button>
+            <button class="dropdown-item" (click)="onDeleteChildren(item.id)">
+              Delete Children</button>
+          </div>
+        </div> -->
+        <div>
+          <app-to-do-item [isCollapsed]="nextCollapse" [editMode]="editMode" [items]="item.items" *ngIf="item.items">
           </app-to-do-item>
-      </div>
-    </div>
+        </div>
+      </li>
+    </ul>
   </div>
-</div> -->
-
-
-<!-- {{detail.description}} -->
-<!-- <br>
-<h4 class="list-group-item-heading text-lg-left">
-  <button class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed">
-  {{item.title}}
-  </button>
-  <a (click)="isCollapsed = !isCollapsed">{{item.title}}</a>
-</h4>
-<div [ngbCollapse]="isCollapsed">
-  <div class="card">
-    <div class="card-body">
-      <p class="list-group-item-text text-md-left">{{item.details}}</p>
-    </div>
-  </div>
-</div> -->
-<!-- <p>
-  <button type="button" class="btn btn-outline-primary"
-  (click)="isCollapsed = !isCollapsed"
-          >
-    Toggle
-  </button>
-</p>
-<div id="collapseExample" [ngbCollapse]="isCollapsed">
-  <div class="card">
-    <div class="card-body">
-      You can collapse this card by clicking Toggle
-    </div>
-  </div>
-</div> -->
+</div>

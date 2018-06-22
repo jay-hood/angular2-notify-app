@@ -1,0 +1,11 @@
+/* [class^="container"], [class*="container"] {
+  background-color: #D8D8D6;
+} */
+
+.col-sm-4, .col-sm-11 {
+  background-color: #D8D8D6;
+}
+
+.col-sm-1 {
+  background-color: white;
+}

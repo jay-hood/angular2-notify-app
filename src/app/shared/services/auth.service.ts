@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import 'firebase/auth';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
   signedIn: Subject<boolean> = new Subject<boolean>();
   signVal = false;
   token: string;
-  constructor() {
+  constructor(private router: Router) {
     // firebase.auth().onAuthStateChanged(function(user) {
     //
     // });
@@ -16,7 +17,6 @@ export class AuthService {
 
   loadUser() {
     firebase.auth().onAuthStateChanged((currentUser) => {
-        console.log(currentUser);
         if (currentUser === null) {
             this.token = null;
         } else {
@@ -36,6 +36,7 @@ export class AuthService {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         response => {
+          this.router.navigate(['/']);
           firebase.auth().currentUser.getIdToken().then(
             (token: string) => {
               this.token = token;
@@ -66,7 +67,6 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    console.log(this.token);
     return this.token != null;
   }
 

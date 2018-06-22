@@ -87,10 +87,14 @@ export class ToDoListService {
   }
 
   getMaxId(items: Item[]) {
-    this.items.forEach( element => {
+    console.log(this.currentMaxId);
+    console.log(items);
+    items.forEach( element => {
       if (element.id > this.currentMaxId) {
         this.currentMaxId = element.id;
       } else if (element.items) {
+        console.log('element: ' + element);
+        console.log('element items: ' + element.items);
         this.getMaxId(element.items);
       }
     });

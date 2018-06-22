@@ -1,51 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormArray, NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToDoListService } from '../../shared/services/to-do-list.service';
 import { DataStorageService } from '../../shared/services/data-storage.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from '../../shared/models/item.model';
 import { Response } from '@angular/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-item',
   templateUrl: './edit-item.component.html',
   styleUrls: ['./edit-item.component.css']
 })
-export class EditItemComponent implements OnInit {
+export class EditItemComponent implements OnInit, OnDestroy {
 
   itemNumber: number;
+  private subscription: Subscription;
   itemForm: FormGroup;
-  items: Item[];
+  items: Item[] = [];
   depth: number;
-  editMode = false;
+  editMode = true;
   addableGroup: FormGroup;
+  dataisAvailable = false;
 
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private list: ToDoListService,
-    private ds: DataStorageService) { }
+    private auth: AuthService,
+    private ds: DataStorageService) {
+
+    }
 
   ngOnInit() {
     this.route.params.subscribe(
       (params) => {
-        this.itemNumber = +params['itemNumber'];
         this.editMode = params['itemNumber'] != null;
+        this.itemNumber = +params['itemNumber'];
+        // if (this.auth.isAuthenticated()) {
+        //     this.ds.getNotes();
+        // }
       }
     );
+    console.log(this.editMode);
     if (this.editMode) {
       this.items = this.list.getItem(this.itemNumber);
-      this.list.listUpdated.subscribe(
-        (items: Item[]) => {
-          this.items[0] = items[this.itemNumber];
+      if (this.items) {
+        this.itemForm = this.fb.group({
+          items: this.initArray(this.items)
         });
-      this.itemForm = this.fb.group({
-        items: this.initArray(this.items)
-      });
-      this.depth = 0;
+        this.dataisAvailable = true;
+        this.depth = 0;
+      }
+      console.log(this.items);
+      console.log(this.itemForm);
+      this.subscription = this.list.listUpdated.subscribe(
+        (items: Item[]) => {
+          console.log('does it get here?');
+          this.items = [items[this.itemNumber]];
+          this.itemForm = this.fb.group({
+            items: this.initArray(this.items)
+          });
+          console.log(this.dataisAvailable);
+          console.log(this.itemForm);
+          this.depth = 0;
+        });
+      console.log('does it get here?');
     } else {
       this.newItem();
     }
+  }
+  ngOnDestroy() {
+    // this.subscription.unsubscribe();
   }
 
   newItem() {
@@ -63,13 +90,14 @@ export class EditItemComponent implements OnInit {
 
 
   initArray(items: Item[]): FormArray {
+    console.log(items);
     const tempArray = new FormArray([]);
     items.forEach( item => {
       const tempItem = this.fb.group({
         id: item.id,
         details: item.details,
         date: item.date,
-        items: item.items ? this.initArray(item.items) : []
+        items: item.items ? this.initArray(item.items) : new FormArray([])
       });
       tempArray.push(tempItem);
     });
@@ -77,7 +105,6 @@ export class EditItemComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form.value);
     // this doesn't actually work
     if (this.editMode) {
       const tempItem = form.value.items[0];

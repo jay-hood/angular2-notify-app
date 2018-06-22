@@ -20,7 +20,7 @@ export class EditDetailComponent implements OnInit {
     private list: ToDoListService) { }
 
   ngOnInit() {
-    console.log(this.itemForm);
+    // console.log(this.itemForm);
     this.inputColor = this.getInputColor(this.depth);
   }
 
@@ -62,6 +62,7 @@ export class EditDetailComponent implements OnInit {
   }
 
   onAddChild() {
+    // console.log(this.itemForm.value);
     (<FormArray>this.itemForm.get('items')).push(this.fb.group({
       id: this.list.getMaxId(this.list.getItems()),
       details: '',
