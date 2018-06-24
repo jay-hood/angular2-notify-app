@@ -3,6 +3,7 @@ import { Routes, RouterModule, ActivatedRoute, PreloadAllModules } from '@angula
 import { NoteListComponent } from '../../notes/note-list.component';
 import { NoteComponent } from '../../notes/note-item/note.component';
 import { NoteRootComponent } from '../../notes/note-item/note-root/note-root.component';
+import { NoteDisplayComponent } from '../../notes/note-item/note-root/note-display/note-display.component';
 import { PlaceholderComponent } from '../placeholder/placeholder.component';
 import { EditNoteComponent } from '../../notes/edit-note/edit-note.component';
 
@@ -10,8 +11,9 @@ import { EditNoteComponent } from '../../notes/edit-note/edit-note.component';
 const appRoutes: Routes = [
   {'path': '', component: PlaceholderComponent, pathMatch: 'full'},
   {'path': 'note/new', component: EditNoteComponent},
-  {'path': 'note/:noteNumber/edit', component: EditNoteComponent},
-  {'path': 'note/:noteNumber', component: NoteRootComponent},
+  {'path': 'note', component: NoteRootComponent,
+    children: [{'path': ':noteNumber', component: NoteDisplayComponent},
+               {'path': ':noteNumber/edit', component: EditNoteComponent}]},
 ];
 
 @NgModule({

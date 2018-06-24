@@ -21,6 +21,7 @@ import { EditNoteComponent } from './notes/edit-note/edit-note.component';
 import { NoteRootComponent } from './notes/note-item/note-root/note-root.component';
 import { EditDetailComponent } from './notes/edit-note/edit-detail/edit-detail.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { NoteDisplayComponent } from './notes/note-item/note-root/note-display/note-display.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
     EditNoteComponent,
     NoteRootComponent,
     EditDetailComponent,
-    SignInComponent
+    SignInComponent,
+    NoteDisplayComponent
   ],
   imports: [
     BrowserModule,
