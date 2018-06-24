@@ -1,5 +1,5 @@
-<div [formGroup]="itemForm">
-    <div class="item offset-md-{{depth}}">
+<div [formGroup]="noteForm">
+    <div class="note offset-md-{{depth}}">
       <div class="input-group">
         <input type="text" [ngStyle]="{'border-color': inputColor}" class="form-control" formControlName="details">
         <div class="btn-toolbar">
@@ -9,10 +9,10 @@
         </div>
       </div>
     </div>
-  <div formArrayName="items">
-    <div *ngFor="let item of itemForm.controls.items.controls; let i = index">
+  <div formArrayName="notes">
+    <div *ngFor="let note of noteForm.controls.notes.controls; let i = index">
       <div [formGroupName]="i">
-        <app-edit-detail [depth]="depth+1" [itemForm]="itemForm.controls.items.controls[i]">
+        <app-edit-detail [depth]="depth+1" [noteForm]="noteForm.controls.notes.controls[i]">
         </app-edit-detail>
       </div>
     </div>

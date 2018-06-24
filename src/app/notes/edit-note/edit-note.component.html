@@ -1,0 +1,15 @@
+<div *ngIf="dataisAvailable">
+  <div class="container note">
+    <form [formGroup]="noteForm" (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div formArrayName="notes">
+        <div *ngFor="let note of noteForm.controls.notes.controls; let i = index">
+          <div [formGroupName]="i">
+              <app-edit-detail [editMode]="editMode" [depth]="depth" [noteForm]="noteForm.controls.notes.controls[i]">
+              </app-edit-detail>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-success" type="submit">Save</button>
+    </form>
+  </div>
+</div>

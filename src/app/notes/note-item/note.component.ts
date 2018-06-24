@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ToDoListService } from '../../shared/services/to-do-list.service';
+import { NoteService } from '../../shared/services/note.service';
 import { DataStorageService } from '../../shared/services/data-storage.service';
-import { Item } from '../../shared/models/item.model';
+import { Note } from '../../shared/models/note.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -9,13 +9,13 @@ import { Response } from '@angular/http';
 
 
 @Component({
-  selector: 'app-to-do-item',
-  templateUrl: './to-do-item.component.html',
-  styleUrls: ['./to-do-item.component.css']
+  selector: 'app-note',
+  templateUrl: './note.component.html',
+  styleUrls: ['./note.component.css']
 })
-export class ToDoItemComponent {
-  @Input() items: Item[] = [];
-  @Input() prevItem: Item;
+export class NoteComponent {
+  @Input() notes: Note[] = [];
+  @Input() prevNote: Note;
   @Input() editMode: boolean;
   @Input() isCollapsed = false;
 
@@ -24,7 +24,7 @@ export class ToDoItemComponent {
   creationNumber: number;
   listSubscription: Subscription;
   constructor(
-    private list: ToDoListService,
+    private ns: NoteService,
     private config: NgbDropdownConfig,
     private ds: DataStorageService) {
       this.config.placement = 'right';
@@ -35,7 +35,7 @@ export class ToDoItemComponent {
 
 
   onDelete(index: number) {
-    this.list.deleteItemAndShiftChildren(index);
+    this.ns.deleteNoteAndShiftChildren(index);
     this.ds.storeNotes().subscribe(
       (response: Response) => {
         console.log(response);
@@ -44,7 +44,7 @@ export class ToDoItemComponent {
   }
 
   onDeleteChildren(index: number) {
-    this.list.deleteChildItems(index);
+    this.ns.deleteChildNotes(index);
     this.ds.storeNotes().subscribe(
       (response: Response) => {
         console.log(response);

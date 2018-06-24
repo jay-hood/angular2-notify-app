@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { Item } from './shared/models/item.model';
+import { Note } from './shared/models/note.model';
 import { DataStorageService } from './shared/services/data-storage.service';
 import { AuthService } from './shared/services/auth.service';
 import * as firebase from 'firebase';

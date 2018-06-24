@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Item } from '../../../shared/models/item.model';
+import { Note } from '../../../shared/models/note.model';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { ToDoListService } from '../../../shared/services/to-do-list.service';
+import { NoteService } from '../../../shared/services/note.service';
 
 @Component({
   selector: 'app-edit-detail',
@@ -10,14 +10,14 @@ import { ToDoListService } from '../../../shared/services/to-do-list.service';
 })
 export class EditDetailComponent implements OnInit {
 
-  @Input() itemForm: FormGroup;
+  @Input() noteForm: FormGroup;
   @Input() depth: number;
   @Input() editMode: boolean;
   inputColor: string;
 
   constructor(
     private fb: FormBuilder,
-    private list: ToDoListService) { }
+    private notes: NoteService) { }
 
   ngOnInit() {
     // console.log(this.itemForm);
@@ -63,11 +63,11 @@ export class EditDetailComponent implements OnInit {
 
   onAddChild() {
     // console.log(this.itemForm.value);
-    (<FormArray>this.itemForm.get('items')).push(this.fb.group({
-      id: this.list.getMaxId(this.list.getItems()),
+    (<FormArray>this.noteForm.get('notes')).push(this.fb.group({
+      id: this.notes.getMaxId(this.notes.getNotes()),
       details: '',
       date: new Date(),
-      items: new FormArray([])
+      notes: new FormArray([])
     }));
   }
 

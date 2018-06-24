@@ -7,31 +7,31 @@ import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
-import { ToDoListService } from './shared/services/to-do-list.service';
+import { NoteService } from './shared/services/note.service';
 import { DataStorageService } from './shared/services/data-storage.service';
 import { AuthService } from './shared/services/auth.service';
 
 import { AppComponent } from './app.component';
-import { ToDoListComponent } from './to-do-list/to-do-list.component';
-import { ToDoItemComponent } from './to-do-list/to-do-item/to-do-item.component';
+import { NoteListComponent } from './notes/note-list.component';
+import { NoteComponent } from './notes/note-item/note.component';
 import { HeaderComponent } from './header/header.component';
 import { PlaceholderComponent } from './shared/placeholder/placeholder.component';
 import { DropdownDirective } from './shared/directives/dropdown.directive';
-import { EditItemComponent } from './to-do-list/edit-item/edit-item.component';
-import { ItemRootComponent } from './to-do-list/to-do-item/item-root/item-root.component';
-import { EditDetailComponent } from './to-do-list/edit-item/edit-detail/edit-detail.component';
+import { EditNoteComponent } from './notes/edit-note/edit-note.component';
+import { NoteRootComponent } from './notes/note-item/note-root/note-root.component';
+import { EditDetailComponent } from './notes/edit-note/edit-detail/edit-detail.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToDoListComponent,
-    ToDoItemComponent,
+    NoteListComponent,
+    NoteComponent,
     HeaderComponent,
     PlaceholderComponent,
     DropdownDirective,
-    EditItemComponent,
-    ItemRootComponent,
+    EditNoteComponent,
+    NoteRootComponent,
     EditDetailComponent,
     SignInComponent
   ],
@@ -43,7 +43,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     ReactiveFormsModule,
     NgbModule.forRoot()
   ],
-  providers: [ToDoListService, DataStorageService, AuthService],
+  providers: [NoteService, DataStorageService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

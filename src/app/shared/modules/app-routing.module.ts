@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ActivatedRoute, PreloadAllModules } from '@angular/router';
-import { ToDoListComponent } from '../../to-do-list/to-do-list.component';
-import { ToDoItemComponent } from '../../to-do-list/to-do-item/to-do-item.component';
-import { ItemRootComponent } from '../../to-do-list/to-do-item/item-root/item-root.component';
+import { NoteListComponent } from '../../notes/note-list.component';
+import { NoteComponent } from '../../notes/note-item/note.component';
+import { NoteRootComponent } from '../../notes/note-item/note-root/note-root.component';
 import { PlaceholderComponent } from '../placeholder/placeholder.component';
-import { EditItemComponent } from '../../to-do-list/edit-item/edit-item.component';
+import { EditNoteComponent } from '../../notes/edit-note/edit-note.component';
 
 
 const appRoutes: Routes = [
   {'path': '', component: PlaceholderComponent, pathMatch: 'full'},
-  {'path': 'item/new', component: EditItemComponent},
-  {'path': 'item/:itemNumber/edit', component: EditItemComponent},
-  {'path': 'item/:itemNumber', component: ItemRootComponent},
+  {'path': 'note/new', component: EditNoteComponent},
+  {'path': 'note/:noteNumber/edit', component: EditNoteComponent},
+  {'path': 'note/:noteNumber', component: NoteRootComponent},
 ];
 
 @NgModule({

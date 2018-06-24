@@ -1,24 +1,24 @@
 import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormArray, NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToDoListService } from '../../shared/services/to-do-list.service';
+import { NoteService } from '../../shared/services/note.service';
 import { DataStorageService } from '../../shared/services/data-storage.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { Item } from '../../shared/models/item.model';
+import { Note } from '../../shared/models/note.model';
 import { Response } from '@angular/http';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-edit-item',
-  templateUrl: './edit-item.component.html',
-  styleUrls: ['./edit-item.component.css']
+  selector: 'app-edit-note',
+  templateUrl: './edit-note.component.html',
+  styleUrls: ['./edit-note.component.css']
 })
-export class EditItemComponent implements OnInit, OnDestroy {
+export class EditNoteComponent implements OnInit, OnDestroy {
 
-  itemNumber: number;
+  noteNumber: number;
   private subscription: Subscription;
-  itemForm: FormGroup;
-  items: Item[] = [];
+  noteForm: FormGroup;
+  notes: Note[] = [];
   depth: number;
   editMode = true;
   addableGroup: FormGroup;
@@ -27,7 +27,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private list: ToDoListService,
+    private noteService: NoteService,
     private auth: AuthService,
     private ds: DataStorageService) {
 
@@ -36,8 +36,8 @@ export class EditItemComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe(
       (params) => {
-        this.editMode = params['itemNumber'] != null;
-        this.itemNumber = +params['itemNumber'];
+        this.editMode = params['noteNumber'] != null;
+        this.noteNumber = +params['noteNumber'];
         // if (this.auth.isAuthenticated()) {
         //     this.ds.getNotes();
         // }
@@ -45,61 +45,61 @@ export class EditItemComponent implements OnInit, OnDestroy {
     );
     console.log(this.editMode);
     if (this.editMode) {
-      this.items = this.list.getItem(this.itemNumber);
-      if (this.items) {
-        this.itemForm = this.fb.group({
-          items: this.initArray(this.items)
+      this.notes = this.noteService.getNote(this.noteNumber);
+      if (this.notes) {
+        this.noteForm = this.fb.group({
+          notes: this.initArray(this.notes)
         });
         this.dataisAvailable = true;
         this.depth = 0;
       }
-      console.log(this.items);
-      console.log(this.itemForm);
-      this.subscription = this.list.listUpdated.subscribe(
-        (items: Item[]) => {
+      console.log(this.notes);
+      console.log(this.noteForm);
+      this.subscription = this.noteService.listUpdated.subscribe(
+        (notes: Note[]) => {
           console.log('does it get here?');
-          this.items = [items[this.itemNumber]];
-          this.itemForm = this.fb.group({
-            items: this.initArray(this.items)
+          this.notes = [notes[this.noteNumber]];
+          this.noteForm = this.fb.group({
+            notes: this.initArray(this.notes)
           });
           console.log(this.dataisAvailable);
-          console.log(this.itemForm);
+          console.log(this.noteForm);
           this.depth = 0;
         });
       console.log('does it get here?');
     } else {
-      this.newItem();
+      this.newnote();
     }
   }
   ngOnDestroy() {
     // this.subscription.unsubscribe();
   }
 
-  newItem() {
+  newnote() {
     this.depth = 0;
-    this.itemForm = this.fb.group({
-      items: new FormArray([this.fb.group({
-        id: this.list.getMaxId(this.list.getItems()),
+    this.noteForm = this.fb.group({
+      notes: new FormArray([this.fb.group({
+        id: this.noteService.getMaxId(this.noteService.getNotes()),
         details: '',
         date: new Date(),
-        items: new FormArray([])
+        notes: new FormArray([])
       })])
     });
   }
 
 
 
-  initArray(items: Item[]): FormArray {
-    console.log(items);
+  initArray(notes: Note[]): FormArray {
+    console.log(notes);
     const tempArray = new FormArray([]);
-    items.forEach( item => {
-      const tempItem = this.fb.group({
-        id: item.id,
-        details: item.details,
-        date: item.date,
-        items: item.items ? this.initArray(item.items) : new FormArray([])
+    notes.forEach( entry => {
+      const tempnote = this.fb.group({
+        id: entry.id,
+        details: entry.details,
+        date: entry.date,
+        notes: entry.notes ? this.initArray(entry.notes) : new FormArray([])
       });
-      tempArray.push(tempItem);
+      tempArray.push(tempnote);
     });
     return tempArray;
   }
@@ -107,10 +107,10 @@ export class EditItemComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm) {
     // this doesn't actually work
     if (this.editMode) {
-      const tempItem = form.value.items[0];
-      this.list.replaceItem(this.itemNumber, tempItem);
+      const tempnote = form.value.notes[0];
+      this.noteService.replaceNote(this.noteNumber, tempnote);
     } else {
-      this.list.addItem(form.value.items[0]);
+      this.noteService.addNote(form.value.notes[0]);
     }
     this.ds.storeNotes().subscribe(
       (response: Response) => {

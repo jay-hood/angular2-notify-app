@@ -1,44 +1,44 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Response } from '@angular/http';
-import { Item } from '../shared/models/item.model';
+import { Note } from '../shared/models/note.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ToDoListService } from '../shared/services/to-do-list.service';
+import { NoteService } from '../shared/services/note.service';
 import { DataStorageService } from '../shared/services/data-storage.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-to-do-list',
-  templateUrl: './to-do-list.component.html',
-  styleUrls: ['./to-do-list.component.css']
+  selector: 'app-note-list',
+  templateUrl: './note-list.component.html',
+  styleUrls: ['./note-list.component.css']
 })
-export class ToDoListComponent implements OnInit {
+export class NoteListComponent implements OnInit {
 
-  // @Output() itemSelectedEvent = new EventEmitter<Item>();
-  items: Item[];
+  // @Output() noteSelectedEvent = new EventEmitter<Note>();
+  notes: Note[];
   index: number;
   private subscription: Subscription;
 
   constructor(
-    private toDoListService: ToDoListService,
+    private ns: NoteService,
     private router: Router,
     private ds: DataStorageService) {
 
     }
 
   onPanelChange(event: NgbPanelChangeEvent) {
-    // this.itemSelectedEvent.emit(this.toDoListService.getItem(+event.panelId));
+    // this.noteSelectedEvent.emit(this.ns.getNote(+event.panelId));
     this.index = +event.panelId;
     // Need some way of giving a warning when navigating between panels if
     // the user is in the middle of editing.
-    this.router.navigate(['item', this.index]);
-    console.log(this.items[this.index]);
+    this.router.navigate(['note', this.index]);
+    console.log(this.notes[this.index]);
   }
 
   onDelete() {
-    this.toDoListService.deleteItem(this.index);
+    this.ns.deleteNote(this.index);
     this.ds.storeNotes().subscribe(
       (response: Response) => {
         console.log(response);
@@ -49,22 +49,22 @@ export class ToDoListComponent implements OnInit {
 
   onEdit() {
     console.log('edit button clicked');
-    this.router.navigate(['item', this.index, 'edit']);
+    this.router.navigate(['note', this.index, 'edit']);
   }
 
-  onAddItem() {
-    console.log('add item button clicked');
-    this.router.navigate(['item/new']);
+  onAddNote() {
+    console.log('add note button clicked');
+    this.router.navigate(['note/new']);
   }
 
   ngOnInit() {
     this.ds.getNotes();
-    this.items = this.toDoListService.getItems();
-    console.log(this.items);
-    this.subscription = this.toDoListService.listUpdated.subscribe(
-      (items: Item[]) => {
-        this.items = items;
-        console.log(this.items);
+    this.notes = this.ns.getNotes();
+    console.log(this.notes);
+    this.subscription = this.ns.listUpdated.subscribe(
+      (notes: Note[]) => {
+        this.notes = notes;
+        console.log(this.notes);
       }
     );
   }
