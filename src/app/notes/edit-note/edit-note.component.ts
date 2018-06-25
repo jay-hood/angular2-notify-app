@@ -43,7 +43,6 @@ export class EditNoteComponent implements OnInit, OnDestroy {
         // }
       }
     );
-    console.log(this.editMode);
     if (this.editMode) {
       this.notes = this.noteService.getNote(this.noteNumber);
       if (this.notes) {
@@ -53,20 +52,14 @@ export class EditNoteComponent implements OnInit, OnDestroy {
         this.dataisAvailable = true;
         this.depth = 0;
       }
-      console.log(this.notes);
-      console.log(this.noteForm);
       this.subscription = this.noteService.listUpdated.subscribe(
         (notes: Note[]) => {
-          console.log('does it get here?');
           this.notes = [notes[this.noteNumber]];
           this.noteForm = this.fb.group({
             notes: this.initArray(this.notes)
           });
-          console.log(this.dataisAvailable);
-          console.log(this.noteForm);
           this.depth = 0;
         });
-      console.log('does it get here?');
     } else {
       this.newnote();
     }
@@ -76,6 +69,7 @@ export class EditNoteComponent implements OnInit, OnDestroy {
   }
 
   newnote() {
+    this.dataisAvailable = true;
     this.depth = 0;
     this.noteForm = this.fb.group({
       notes: new FormArray([this.fb.group({
@@ -90,7 +84,6 @@ export class EditNoteComponent implements OnInit, OnDestroy {
 
 
   initArray(notes: Note[]): FormArray {
-    console.log(notes);
     const tempArray = new FormArray([]);
     notes.forEach( entry => {
       const tempnote = this.fb.group({
