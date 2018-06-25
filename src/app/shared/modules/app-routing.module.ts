@@ -12,7 +12,8 @@ const appRoutes: Routes = [
   {'path': '', component: PlaceholderComponent, pathMatch: 'full'},
   {'path': 'note/new', component: EditNoteComponent},
   {'path': 'note', component: NoteRootComponent,
-    children: [{'path': ':noteNumber', component: NoteDisplayComponent},
+    children: [{'path': '', component: PlaceholderComponent},
+               {'path': ':noteNumber', component: NoteDisplayComponent},
                {'path': ':noteNumber/edit', component: EditNoteComponent}]},
 ];
 
