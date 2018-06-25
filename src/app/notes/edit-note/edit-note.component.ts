@@ -20,7 +20,7 @@ export class EditNoteComponent implements OnInit, OnDestroy {
   noteForm: FormGroup;
   notes: Note[] = [];
   depth: number;
-  editMode = true;
+  editMode = false;
   addableGroup: FormGroup;
   dataisAvailable = false;
 
