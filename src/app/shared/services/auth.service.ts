@@ -10,12 +10,10 @@ export class AuthService {
   signedIn: Subject<boolean> = new Subject<boolean>();
   signVal = false;
   token: string;
+  redirectURL: string;
+
   constructor(
-    private router: Router) {
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //
-    // });
-  }
+    private router: Router) {}
 
   loadUser() {
     firebase.auth().onAuthStateChanged((currentUser) => {
@@ -27,6 +25,9 @@ export class AuthService {
                   this.token = token;
                   console.log('token set');
                   this.signedIn.next(true);
+                  if (this.redirectURL) {
+                    this.router.navigate([this.redirectURL]);
+                  }
                 }
             );
         }
