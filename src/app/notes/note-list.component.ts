@@ -5,6 +5,7 @@ import { Note } from '../shared/models/note.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NoteService } from '../shared/services/note.service';
 import { DataStorageService } from '../shared/services/data-storage.service';
+import { AuthService } from '../shared/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -19,11 +20,13 @@ export class NoteListComponent implements OnInit {
   // @Output() noteSelectedEvent = new EventEmitter<Note>();
   notes: Note[];
   index: number;
+  private signInSubscription: Subscription;
   private subscription: Subscription;
 
   constructor(
     private ns: NoteService,
     private router: Router,
+    private auth: AuthService,
     private ds: DataStorageService) {
 
     }
@@ -33,7 +36,7 @@ export class NoteListComponent implements OnInit {
     this.index = +event.panelId;
     // Need some way of giving a warning when navigating between panels if
     // the user is in the middle of editing.
-    this.router.navigate(['note', this.index]);
+    this.router.navigate(['notes', this.index]);
     console.log(this.notes[this.index]);
   }
 
@@ -49,17 +52,27 @@ export class NoteListComponent implements OnInit {
 
   onEdit() {
     console.log('edit button clicked');
-    this.router.navigate(['note', this.index, 'edit']);
+    this.router.navigate(['notes', this.index, 'edit']);
   }
 
   onAddNote() {
     console.log('add note button clicked');
-    this.router.navigate(['note/new']);
+    this.router.navigate(['notes/new']);
   }
 
   ngOnInit() {
-    this.ds.getNotes();
-    this.notes = this.ns.getNotes();
+    if (this.auth.isAuthenticated()) {
+      this.ds.getNotes();
+    }
+    this.signInSubscription = this.auth.signedIn.subscribe(
+      status => {
+        if (status) {
+          this.ds.getNotes();
+          this.notes = this.ns.getNotes();
+        }
+        console.log(status);
+      }
+    );
     console.log(this.notes);
     this.subscription = this.ns.listUpdated.subscribe(
       (notes: Note[]) => {

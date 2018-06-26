@@ -3,13 +3,15 @@ import * as firebase from 'firebase';
 import 'firebase/auth';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { DataStorageService } from './data-storage.service';
 
 @Injectable()
 export class AuthService {
   signedIn: Subject<boolean> = new Subject<boolean>();
   signVal = false;
   token: string;
-  constructor(private router: Router) {
+  constructor(
+    private router: Router) {
     // firebase.auth().onAuthStateChanged(function(user) {
     //
     // });
@@ -51,12 +53,23 @@ export class AuthService {
         error => console.log(error)
       );
   }
+  signupUser(email: string, password: string) {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(
+        response => {
+          this.router.navigate(['']);
+        }
+      ).catch(
+        error => console.log(error)
+      );
+  }
 
   signoutUser() {
     firebase.auth().signOut();
     localStorage.removeItem('user');
     this.signVal = false;
     this.signedIn.next(this.signVal);
+    this.router.navigate(['']);
   }
 
   getUserStatus() {
@@ -66,7 +79,7 @@ export class AuthService {
   setToken(user) {
   }
 
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     return this.token != null;
   }
 

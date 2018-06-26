@@ -1,4 +1,6 @@
-<ng-template [ngIf]="!signedIn" [ngIfElse]="loadApp">
+<app-header></app-header>
+<router-outlet></router-outlet>
+<!-- <ng-template [ngIf]="!signedIn" [ngIfElse]="loadApp">
 <div class="container">
   <br>
   <div class="row">
@@ -7,13 +9,12 @@
     </div>
   </div>
 </div>
-</ng-template>
-<ng-template #loadApp>
+</ng-template> -->
+<!-- <ng-template #loadApp>
   <app-header></app-header>
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
-        <!-- <app-to-do-list (itemSelectedEvent)="selectedItem = $event"></app-to-do-list> -->
         <app-note-list>
         </app-note-list>
       </div>
@@ -28,4 +29,4 @@
       </div>
     </div>
   </div>
-</ng-template>
+</ng-template>  -->

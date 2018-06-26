@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+
 import { NoteRootComponent } from '../../notes/note-item/note-root/note-root.component';
+import { NoteComponent } from '../../notes/note-item/note.component';
+import { NoteListComponent } from '../../notes/note-list.component';
 import { NoteDisplayComponent } from '../../notes/note-item/note-root/note-display/note-display.component';
 import { EditNoteComponent } from '../../notes/edit-note/edit-note.component';
 import { PlaceholderComponent } from '../placeholder/placeholder.component';
+import { AuthGuardService } from '../services/auth-guard.service';
 
 const notesRoutes: Routes = [
-  {'path': 'note/new', component: EditNoteComponent},
-  {'path': 'note', component: NoteRootComponent,
+  {'path': '', canActivateChild: [AuthGuardService], component: NoteListComponent,
     children: [{'path': '', component: PlaceholderComponent},
-               {'path': ':noteNumber', component: NoteDisplayComponent},
-               {'path': ':noteNumber/edit', component: EditNoteComponent}]}
+               {'path': 'new', component: EditNoteComponent},
+               {'path': ':noteNumber/edit', component: EditNoteComponent},
+               {'path': ':noteNumber', component: NoteRootComponent}]}
 ];
 
 @NgModule({

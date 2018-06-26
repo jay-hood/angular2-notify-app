@@ -1,19 +1,33 @@
-
-<span class="input-group-btn">
-  <button type="button" class="btn btn-primary" (click)="onAddNote()">New Note</button>
-</span>
-<div>
-    <ngb-accordion [closeOthers]="true" activeIds="accordion-panel-1"
-    (panelChange)="onPanelChange($event)">
-      <ngb-panel *ngFor="let note of notes;
-      let i = index" title="{{note.details}}"
-      id="{{i}}">
-          <ng-template ngbPanelContent>
-            <div class="float-right">
-              <button class="btn btn-danger btn-space" (click)="onDelete()">Delete</button>
-              <button class="btn btn-success" (click)="onEdit()">Edit</button>
-            </div>
-          </ng-template>
-      </ngb-panel>
-    </ngb-accordion>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-primary" (click)="onAddNote()">New Note</button>
+      </span>
+      <div>
+          <ngb-accordion [closeOthers]="true" activeIds="accordion-panel-1"
+          (panelChange)="onPanelChange($event)">
+            <ngb-panel *ngFor="let note of notes;
+            let i = index" title="{{note.details}}"
+            id="{{i}}">
+                <ng-template ngbPanelContent>
+                  <div class="float-right">
+                    <button class="btn btn-danger btn-space" (click)="onDelete()">Delete</button>
+                    <button class="btn btn-success" (click)="onEdit()">Edit</button>
+                  </div>
+                </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="row">
+        <br>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-11">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

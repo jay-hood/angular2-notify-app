@@ -1,22 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NoteListComponent } from '../../notes/note-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { PageNotFoundComponent } from '../../auth/page-not-found/page-not-found.component';
+import { PlaceholderComponent } from '../placeholder/placeholder.component';
 
 @NgModule({
   imports: [
     CommonModule,
     NgbModule,
     ReactiveFormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
   ],
   declarations: [
-    NoteListComponent
+    PageNotFoundComponent,
+    PlaceholderComponent
   ],
   exports: [
-    NoteListComponent,
+    PageNotFoundComponent,
+    PlaceholderComponent,
     CommonModule,
     NgbModule,
     ReactiveFormsModule,

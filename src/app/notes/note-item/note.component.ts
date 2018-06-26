@@ -28,6 +28,7 @@ export class NoteComponent {
     private config: NgbDropdownConfig,
     private ds: DataStorageService) {
       this.config.placement = 'right';
+      console.log('note intantiated');
       // this.creationNumber = this.list.getCreationNumber();
       // this.list.incrementCreationNumber();
       // this.isCollapsed = true;
