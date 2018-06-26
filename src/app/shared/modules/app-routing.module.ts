@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from '../../auth/page-not-found/page-not-found.
 import { AuthGuardService } from '../services/auth-guard.service';
 
 const appRoutes: Routes = [
-  {path: '', component: PlaceholderComponent},
+  {path: '', component: PlaceholderComponent, pathMatch: 'full'},
   {path: 'signin', component: SignInComponent},
   {path: 'signup', component: SignUpComponent},
   {path: 'notes', canActivate: [AuthGuardService], loadChildren: './notes.module#NotesModule'},

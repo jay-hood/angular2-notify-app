@@ -19,6 +19,12 @@
             <a class="nav-link" style="cursor: pointer;" (click)="onLogout()">Logout</a>
           </ng-template>
         </li>
+        <ng-template [ngIf]="!signedInStatus">
+          <li class="nav-link divider"> | </li>
+          <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer;" routerLink='/signup'>Sign Up</a>
+          </li>
+        </ng-template>
       </ul>
     </div>
   </div>

@@ -16,8 +16,9 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.auth.isAuthenticated()) {
       return true;
+      // if user navigates to new location, returns true
     }
-    this.router.navigate(['./signin']);
+    // if just initialized, or on refresh, returns false. Have to use angularfire.
     return false;
   }
 
@@ -25,7 +26,8 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     if (this.auth.isAuthenticated()) {
       return true;
     }
-    this.router.navigate(['./signin']);
+    // this.router.navigate(['./signin']);
+    console.log('ca: false');
     return false;
   }
 }
