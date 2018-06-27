@@ -12,15 +12,15 @@ import { DataStorageService } from './shared/services/data-storage.service';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { NoteService } from './shared/services/note.service';
+import { BulletinBoardComponent } from './bulletin-board/bulletin-board.component';
 
-import { DropdownDirective } from './shared/directives/dropdown.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    DropdownDirective
+    BulletinBoardComponent
   ],
   imports: [
     BrowserModule,

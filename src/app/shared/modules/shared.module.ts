@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PlaceholderComponent } from '../placeholder/placeholder.component';
+import { ResizeDirective } from '../directives/resize.directive';
+import { DropdownDirective } from '../directives/dropdown.directive';
 
 @NgModule({
   imports: [
@@ -12,10 +14,14 @@ import { PlaceholderComponent } from '../placeholder/placeholder.component';
     NgbModule.forRoot(),
   ],
   declarations: [
-    PlaceholderComponent
+    PlaceholderComponent,
+    ResizeDirective,
+    DropdownDirective
   ],
   exports: [
     PlaceholderComponent,
+    ResizeDirective,
+    DropdownDirective,
     CommonModule,
     NgbModule,
     ReactiveFormsModule,

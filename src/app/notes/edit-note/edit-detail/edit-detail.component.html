@@ -1,7 +1,8 @@
 <div [formGroup]="noteForm">
     <div class="note offset-md-{{depth}}">
       <div class="input-group">
-        <input type="text" [ngStyle]="{'border-color': inputColor}" class="form-control" formControlName="details">
+        <textarea appResize rows="1" [ngStyle]="{'border-color': inputColor}" class="form-control" formControlName="details">
+        </textarea>
         <div class="btn-toolbar">
           <button class="btn btn-primary" type="button" (click)="onAddChild()">+</button>
           <button class="btn btn-danger" type="button" (click)="onDelete()">x</button>
