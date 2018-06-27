@@ -10,6 +10,7 @@ import { NoteService } from '../../../shared/services/note.service';
 })
 export class EditDetailComponent implements OnInit {
 
+  @Input() noteFormArray: FormArray;
   @Input() noteForm: FormGroup;
   @Input() depth: number;
   @Input() editMode: boolean;
@@ -69,6 +70,14 @@ export class EditDetailComponent implements OnInit {
       date: new Date(),
       notes: new FormArray([])
     }));
+  }
+
+  onDelete() {
+    this.notes.deleteNoteAndShiftChildren(this.noteForm.get('id').value);
+  }
+
+  onDeleteChildren() {
+    this.notes.deleteChildNotes(this.noteForm.get('id').value);
   }
 
 }

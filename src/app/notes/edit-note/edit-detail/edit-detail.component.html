@@ -5,7 +5,7 @@
         </textarea>
         <div class="btn-toolbar">
           <button class="btn btn-primary" type="button" (click)="onAddChild()">+</button>
-          <button class="btn btn-danger" type="button" (click)="onDelete()">x</button>
+          <button *ngIf="depth>0" class="btn btn-danger" type="button" (click)="onDelete()">x</button>
           <button class="btn btn-danger" type="button" (click)="onDeleteChildren()">xv</button>
         </div>
       </div>

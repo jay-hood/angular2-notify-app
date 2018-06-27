@@ -4,7 +4,11 @@
       <div formArrayName="notes">
         <div *ngFor="let note of noteForm.controls.notes.controls; let i = index">
           <div [formGroupName]="i">
-              <app-edit-detail [editMode]="editMode" [depth]="depth" [noteForm]="noteForm.controls.notes.controls[i]">
+              <app-edit-detail
+              [editMode]="editMode"
+              [depth]="depth" 
+              [noteFormArray]="noteForm.controls.notes.controls"
+              [noteForm]="noteForm.controls.notes.controls[i]">
               </app-edit-detail>
           </div>
         </div>
