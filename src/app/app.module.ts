@@ -9,13 +9,6 @@ import { CoreModule } from './shared/modules/core.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
-<<<<<<< HEAD
-import { DataStorageService } from './shared/services/data-storage.service';
-import { AuthService } from './shared/services/auth.service';
-import { AuthGuardService } from './shared/services/auth-guard.service';
-import { NoteService } from './shared/services/note.service';
-=======
->>>>>>> modules
 import { BulletinBoardComponent } from './bulletin-board/bulletin-board.component';
 
 
