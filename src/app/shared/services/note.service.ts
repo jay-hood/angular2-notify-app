@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class NoteService {
 
+  // refactor at some point for angularfire2
   private currentMaxId = -1;
   listUpdated: Subject<Note[]> = new Subject<Note[]>();
   temp: Note = null;
