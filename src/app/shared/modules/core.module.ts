@@ -3,6 +3,7 @@ import { DataStorageService } from '../services/data-storage.service';
 import { AuthService } from '../services/auth.service';
 import { AuthGuardService } from '../services/auth-guard.service';
 import { NoteService } from '../services/note.service';
+import { BulletinBoardService } from '../services/bulletin-board.service';
 
 @NgModule({
   imports: [],
@@ -11,7 +12,8 @@ import { NoteService } from '../services/note.service';
     DataStorageService,
     AuthService,
     AuthGuardService,
-    NoteService
+    NoteService,
+    BulletinBoardService
   ]
 })
 export class CoreModule { }

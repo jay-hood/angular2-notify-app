@@ -51,12 +51,10 @@ export class NoteListComponent implements OnInit {
   }
 
   onEdit() {
-    console.log('edit button clicked');
     this.router.navigate(['notes', this.index, 'edit']);
   }
 
   onAddNote() {
-    console.log('add note button clicked');
     this.router.navigate(['notes/new']);
   }
 
@@ -70,14 +68,11 @@ export class NoteListComponent implements OnInit {
           this.ds.getNotes();
           this.notes = this.ns.getNotes();
         }
-        console.log(status);
       }
     );
-    console.log(this.notes);
     this.subscription = this.ns.listUpdated.subscribe(
       (notes: Note[]) => {
         this.notes = notes;
-        console.log(this.notes);
       }
     );
   }

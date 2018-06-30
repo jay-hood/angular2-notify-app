@@ -1,3 +1,23 @@
-<p>
-  bulletin-board works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+      <button class="btn btn-primary" (click)="onAddBulletin()">Add Bulletin</button>
+      <br>
+      <br>
+      <div *ngIf="newBulletin">
+        <form [formGroup]="bulletinForm" (ngSubmit)="onSubmit(f)" #f="ngForm">
+          <div class="input-group">
+            <input type="text" class="form-control" formControlName="title">
+          </div>
+          <div class="input-group">
+            <textarea formControlName="content" rows="5" class="form-control"></textarea>
+          </div>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+      </div>
+      <div *ngFor="let item of bulletinArray">
+        <app-bulletin [bulletin]="item"></app-bulletin>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,11 @@
 export class Bulletin {
-  constructor(poster: string,
-              postDate: Date,
-              content: string,
-              comments?: Bulletin[]) {}
+  constructor(
+    public poster: string,
+    public title: string,
+    public postDate: Date,
+    public content: string,
+    public id: number,
+    public userid: string,
+    public comments?: Bulletin[]
+  ) {}
 }

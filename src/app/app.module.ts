@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
 import { BulletinBoardComponent } from './bulletin-board/bulletin-board.component';
+import { BulletinComponent } from './bulletin-board/bulletin/bulletin.component';
 
 
 
@@ -17,7 +18,8 @@ import { BulletinBoardComponent } from './bulletin-board/bulletin-board.componen
   declarations: [
     AppComponent,
     HeaderComponent,
-    BulletinBoardComponent
+    BulletinBoardComponent,
+    BulletinComponent
   ],
   imports: [
     BrowserModule,

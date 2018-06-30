@@ -4,6 +4,7 @@ import 'firebase/auth';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { DataStorageService } from './data-storage.service';
+import { NoteService } from './note.service';
 
 @Injectable()
 export class AuthService {
@@ -11,19 +12,24 @@ export class AuthService {
   signVal = false;
   token: string;
   redirectURL: string;
+  userId: string;
+  currentUserEmail: string;
 
   constructor(
-    private router: Router) {}
+    private router: Router,
+    private ns: NoteService
+  ) {}
 
   loadUser() {
     firebase.auth().onAuthStateChanged((currentUser) => {
         if (currentUser === null) {
             this.token = null;
         } else {
+            this.userId = currentUser.uid;
+            this.currentUserEmail = currentUser.email;
             currentUser.getIdToken().then(
                 (token: string) => {
                   this.token = token;
-                  console.log('token set');
                   this.signedIn.next(true);
                   if (this.redirectURL) {
                     this.router.navigate([this.redirectURL]);
@@ -42,11 +48,11 @@ export class AuthService {
           this.router.navigate(['']);
           firebase.auth().currentUser.getIdToken().then(
             (token: string) => {
+              this.userId = firebase.auth().currentUser.uid;
+              this.currentUserEmail = firebase.auth().currentUser.email;
               this.token = token;
               this.signVal = true;
               this.signedIn.next(this.signVal);
-              localStorage.setItem('user', firebase.auth().currentUser.uid);
-              this.signVal = true;
             }
           );
         }
@@ -67,9 +73,9 @@ export class AuthService {
 
   signoutUser() {
     firebase.auth().signOut();
-    localStorage.removeItem('user');
     this.signVal = false;
     this.signedIn.next(this.signVal);
+    this.ns.clearNotes();
     this.router.navigate(['']);
   }
 
@@ -77,8 +83,6 @@ export class AuthService {
     return this.signVal;
   }
 
-  setToken(user) {
-  }
 
   isAuthenticated(): boolean {
     return this.token != null;

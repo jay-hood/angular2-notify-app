@@ -24,14 +24,21 @@ export class NoteService {
     return this.notes.slice();
   }
 
+  clearNotes() {
+    this.notes = new Array<Note>();
+  }
+
   replaceNote(noteNumber: number, note: Note) {
     this.notes[noteNumber] = note;
     this.listUpdated.next(this.notes.slice());
   }
 
-  setNotes(notes: Note[]) {
-    if (notes) {
+  setNotes(notes) {
+    if (Array.isArray(notes)) {
       this.notes = notes;
+      this.listUpdated.next(this.notes.slice());
+    } else if (notes) {
+      this.notes.push(notes);
       this.listUpdated.next(this.notes.slice());
     }
   }

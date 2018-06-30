@@ -36,11 +36,9 @@ export class AppComponent implements OnInit {
     // );
     // This is always false when the program refreshes, because the token is undefined
     // at the time this method is called, because it executes BEFORE loadUser
-    console.log('calling firebase auth again');
     console.log(firebase.auth().currentUser);
     firebase.auth().onAuthStateChanged(currentUser => {
       this.signedIn = (currentUser !== null);
-      console.log(this.signedIn);
     });
     // if (firebase.auth().currentUser !== null) {
     //   this.signedIn = true;
