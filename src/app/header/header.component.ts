@@ -12,16 +12,15 @@ export class HeaderComponent implements OnInit {
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
-    this.auth.signedIn.subscribe(
-      status => {
-        this.signedInStatus = status;
+    this.auth.authState.subscribe(
+      () => {
+        status !== null ? this.signedInStatus = true : this.signedInStatus = false;
       }
     );
-    this.signedInStatus = this.auth.isAuthenticated();
+    this.signedInStatus = this.auth.isAuthenticated;
   }
 
   onLogout() {
-    this.signedInStatus = false;
     this.auth.signoutUser();
   }
 

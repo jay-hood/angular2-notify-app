@@ -25,7 +25,7 @@ export class AuthService {
   constructor(
     private router: Router,
     private ns: NoteService,
-    private db: AngularFireDatabase,
+    public db: AngularFireDatabase,
     private afAuth: AngularFireAuth
   ) {
     this.afAuth.authState.subscribe((auth) => {
@@ -39,6 +39,10 @@ export class AuthService {
 
   get currentUser(): any {
     return this.isAuthenticated ? this.authState : null;
+  }
+
+  get currentUserIdToken(): any {
+    return this.afAuth.idToken;
   }
 
   get currentUserObservable(): any {

@@ -16,33 +16,40 @@ export class DataStorageService {
     private bbs: BulletinBoardService) {  }
 
   storeNotes() {
-    const token = this.auth.getToken();
-    const userId = this.auth.userId;
-    return this.http.put(`https://ng-notebook-jay.firebaseio.com/${userId}/notes.json?auth=` + token,
-      this.notes.getNotes());
+    const token = this.auth.currentUserIdToken;
+    const userId = this.auth.currentUserId;
+    // return this.http.put(`https://ng-notebook-jay.firebaseio.com/${userId}/notes.json?auth=` + token,
+    //   this.notes.getNotes());
   }
 
   getNotes() {
-    const token = this.auth.getToken();
-    const userId = this.auth.userId;
-    return this.http.get(`https://ng-notebook-jay.firebaseio.com/${userId}/notes.json?auth=` + token)
-      .subscribe(
-        (response: Response) => {
-          const notes: Note[] = response.json();
-          this.notes.setNotes(notes);
-        }
-      );
+    // const token = this.auth.currentUserIdToken;
+    // const userId = this.auth.currentUserId;
+    // return this.http.get(`https://ng-notebook-jay.firebaseio.com/${userId}/notes.json?auth=` + token)
+    //   .subscribe(
+    //     (response: Response) => {
+    //       const notes: Note[] = response.json();
+    //       this.notes.setNotes(notes);
+    //     }
+    //   );
+
+    return this.auth.db.list(`${this.auth.currentUserId}/notes`).valueChanges().subscribe(
+      (res) => {
+        // const notes = res as Note[];
+        this.notes.setNotes(res);
+      });
+
   }
 
   storeBulletins() {
-    const token = this.auth.getToken();
+    const token = this.auth.currentUserIdToken;
     console.log(this.bbs.board);
     return this.http.put('https://ng-notebook-jay.firebaseio.com/board.json?auth=' + token,
       this.bbs.board).subscribe(response => console.log(response));
   }
 
   getBulletins() {
-    const token = this.auth.getToken();
+    const token = this.auth.currentUserIdToken;
     return this.http.get('https://ng-notebook-jay.firebaseio.com/board.json?auth=' + token)
       .subscribe(
         (response: Response) => {
