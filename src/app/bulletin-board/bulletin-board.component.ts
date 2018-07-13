@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { BulletinBoardService } from '../shared/services/bulletin-board.service';
-import { DataStorageService } from '../shared/services/data-storage.service';
 import { Bulletin } from '../shared/models/bulletin.model';
 import { Subscription } from 'rxjs';
 
@@ -12,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class BulletinBoardComponent implements OnInit {
 
-  constructor(private bb: BulletinBoardService, private ds: DataStorageService) { }
+  constructor(private bb: BulletinBoardService) { }
 
   bulletinBoardSubscription: Subscription;
 
@@ -26,7 +25,7 @@ export class BulletinBoardComponent implements OnInit {
 
   ngOnInit() {
     this.bulletinArray = this.bb.board;
-    this.ds.getBulletins();
+    this.bb.getBulletinsFromDatabase();
     this.bulletinBoardSubscription = this.bb.boardUpdated.subscribe(
       (board: Bulletin[]) => {
         this.bulletinArray = board;
@@ -36,7 +35,7 @@ export class BulletinBoardComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.bb.addBulletin(form.value.title, form.value.content);
-    this.ds.storeBulletins();
+    this.bb.storeBulletinsInDatabase();
     this.newBulletin = false;
   }
 

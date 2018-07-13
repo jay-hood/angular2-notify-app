@@ -1,8 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { Note } from './shared/models/note.model';
-import { DataStorageService } from './shared/services/data-storage.service';
 import { AuthService } from './shared/services/auth.service';
-import * as firebase from 'firebase';
+import { NoteService } from './shared/services/note.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,22 +12,23 @@ export class AppComponent implements OnInit {
   title = 'app';
   signedIn: boolean;
 
-  constructor(private ds: DataStorageService,
-    private auth: AuthService) {
+  constructor(
+              private auth: AuthService,
+              private ns: NoteService) {
 
   }
 
   getsignedInStatus() {
-    return this.auth.isAuthenticated();
+    return this.auth.isAuthenticated;
   }
 
 
   ngOnInit() {
-    firebase.initializeApp({
-      apiKey: 'AIzaSyCZr9_nph3wdg-59bOGnFp6U-BHj84XtYs',
-      authDomain: 'ng-notebook-jay.firebaseapp.com'
-    });
     this.auth.loadUser();
+    this.signedIn = this.auth.isAuthenticated;
+    // if (this.auth.isAuthenticated) {
+    //   this.ns.getNotesFromDatabase();
+    // }
     // this.auth.signedIn.subscribe(
     //   value => {
     //     this.signedIn = value;
@@ -36,10 +36,7 @@ export class AppComponent implements OnInit {
     // );
     // This is always false when the program refreshes, because the token is undefined
     // at the time this method is called, because it executes BEFORE loadUser
-    console.log(firebase.auth().currentUser);
-    firebase.auth().onAuthStateChanged(currentUser => {
-      this.signedIn = (currentUser !== null);
-    });
+    this.auth.signedIn.subscribe(status => this.signedIn = status);
     // if (firebase.auth().currentUser !== null) {
     //   this.signedIn = true;
     // } else {

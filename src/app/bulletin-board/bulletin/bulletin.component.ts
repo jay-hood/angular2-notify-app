@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Bulletin } from '../../shared/models/bulletin.model';
 import { BulletinBoardService } from '../../shared/services/bulletin-board.service';
-import { DataStorageService } from '../../shared/services/data-storage.service';
 import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
@@ -14,12 +13,11 @@ export class BulletinComponent implements OnInit {
   @Input() bulletin: Bulletin;
 
   constructor(private bbs: BulletinBoardService,
-    private ds: DataStorageService,
-    public as: AuthService) { }
+              public as: AuthService) { }
 
   onDelete(id: number) {
     this.bbs.deleteBulletin(id);
-    this.ds.storeBulletins();
+    this.bbs.deleteBulletinFromDatabase();
   }
 
   ngOnInit() {

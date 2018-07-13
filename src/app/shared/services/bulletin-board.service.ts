@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Bulletin } from '../models/bulletin.model';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { DataStorageService } from './data-storage.service';
 
 @Injectable()
 export class BulletinBoardService {
   constructor(
-    private as: AuthService
+    private as: AuthService,
+    private ds: DataStorageService
   ) {  }
 
   boardUpdated: Subject<Bulletin[]> = new Subject<Bulletin[]>();
@@ -32,9 +34,25 @@ export class BulletinBoardService {
     this.boardUpdated.next(this._board.slice());
   }
 
+  deleteBulletinFromDatabase() {
+    this.ds.storeBulletins(this._board.slice());
+  }
+
+  getBulletinsFromDatabase() {
+    this.ds.getBulletins().subscribe(bulletin => {
+      console.log(bulletin);
+      this._board = bulletin as Bulletin[];
+      this.boardUpdated.next(this._board.slice());
+    });
+  }
+
+  storeBulletinsInDatabase() {
+    this.ds.storeBulletins(this._board.slice());
+  }
+
   addBulletin(title: string, content: string) {
     const bulletin = new Bulletin(this.as.currentUserEmail, title, new Date,
-      content, this.max_id, this.as.userId);
+      content, this.max_id, this.as.currentUserId);
     this._board.unshift(bulletin);
     this.boardUpdated.next(this._board.slice());
     this.getMaxId();

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Note } from '../models/note.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { DataStorageService } from './data-storage.service';
 
 @Injectable()
 export class NoteService {
@@ -23,6 +24,19 @@ export class NoteService {
 
   getNotes() {
     return this.notes.slice();
+  }
+
+  getNotesFromDatabase() {
+    this.ds.getNotes().subscribe(res => {
+      this.notes = res as Note[];
+      console.log(res);
+      this.listUpdated.next(this.notes.slice());
+    });
+  }
+
+  storeNotesInDatabase() {
+    this.ds.storeNotes(this.notes.slice());
+    this.listUpdated.next(this.notes.slice());
   }
 
   clearNotes() {
@@ -126,5 +140,5 @@ export class NoteService {
 
   }
 
-  constructor() { }
+  constructor(private ds: DataStorageService) { }
 }

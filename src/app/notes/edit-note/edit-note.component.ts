@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormArray, NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NoteService } from '../../shared/services/note.service';
-import { DataStorageService } from '../../shared/services/data-storage.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Note } from '../../shared/models/note.model';
@@ -28,8 +27,8 @@ export class EditNoteComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private noteService: NoteService,
-    private auth: AuthService,
-    private ds: DataStorageService) {
+    private auth: AuthService
+  ) {
 
     }
 
@@ -85,6 +84,7 @@ export class EditNoteComponent implements OnInit, OnDestroy {
 
   initArray(notes: Note[]): FormArray {
     const tempArray = new FormArray([]);
+    console.log(notes);
     notes.forEach( entry => {
       const tempnote = this.fb.group({
         id: entry.id,
@@ -105,11 +105,7 @@ export class EditNoteComponent implements OnInit, OnDestroy {
     } else {
       this.noteService.addNote(form.value.notes[0]);
     }
-    this.ds.storeNotes().subscribe(
-      (response: Response) => {
-        console.log(response);
-      }
-    );
+    this.noteService.storeNotesInDatabase();
   }
 
 
