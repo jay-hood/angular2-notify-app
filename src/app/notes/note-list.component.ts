@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Response } from '@angular/http';
 import { Note } from '../shared/models/note.model';
@@ -16,7 +16,6 @@ import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 })
 export class NoteListComponent implements OnInit {
 
-  // @Output() noteSelectedEvent = new EventEmitter<Note>();
   notes: Note[];
   index: number;
   private signInSubscription: Subscription;
@@ -30,18 +29,15 @@ export class NoteListComponent implements OnInit {
     }
 
   onPanelChange(event: NgbPanelChangeEvent) {
-    // this.noteSelectedEvent.emit(this.ns.getNote(+event.panelId));
     this.index = +event.panelId;
     // Need some way of giving a warning when navigating between panels if
     // the user is in the middle of editing.
     this.router.navigate(['notes', this.index]);
-    console.log(this.notes[this.index]);
   }
 
   onDelete() {
     this.ns.deleteNote(this.index);
-    // this.ds.storeNotes();
-    this.router.navigate(['']);
+    this.router.navigate(['notes']);
   }
 
   onEdit() {
@@ -54,22 +50,15 @@ export class NoteListComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.isAuthenticated) {
-      this.ns.getNotesFromDatabase();
       this.notes = this.ns.getNotes();
     }
-    this.signInSubscription = this.auth.signedIn.subscribe(
-      status => {
-        if (status) {
-            this.notes = this.ns.getNotes();
-          }
-      });
     this.subscription = this.ns.listUpdated.subscribe(
       (notes: Note[]) => {
-        console.log(notes);
         this.notes = notes;
       }
     );
   }
+
 
 
 }

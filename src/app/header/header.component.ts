@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
     this.statusSubscription = this.auth.signedIn
       .subscribe(status => {
           this.signedInStatus = status;
-          console.log('header signed in status', status);
         });
   }
 

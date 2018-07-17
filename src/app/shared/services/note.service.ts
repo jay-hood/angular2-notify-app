@@ -11,25 +11,26 @@ export class NoteService {
   listUpdated: Subject<Note[]> = new Subject<Note[]>();
   temp: Note = null;
 
-  // noteSeven = new note(6, 'detail seven', new Date);
-  // noteSix = new note(7, 'detail six', new Date, [this.noteSeven]);
-  // noteFive = new note(6, 'detail five', new Date, [this.noteSix]);
-  // noteFour = new note(5, 'detail four', new Date);
-  // noteThree = new note(4, 'detail three', new Date, [this.noteFour]);
-  // noteTwo = new note(3, 'detail two', new Date, [this.noteThree]);
-  // noteOne = new note(2, 'detail one', new Date, [this.noteTwo]);
-  // noteZero = new note(1, 'test note 1', new Date(), [this.noteOne, this.noteFive]);
-
   private notes: Note[] = [];
 
   getNotes() {
     return this.notes.slice();
   }
 
+  notesPromise(): Promise<Note[]> {
+    return new Promise((resolve, reject) => {
+      if(this.ds.getNotes()){
+        this.ds.getNotes().subscribe(res => {
+          return res as Note[];
+        });
+      console.log(reject);
+      }
+    });
+  }
+
   getNotesFromDatabase() {
     this.ds.getNotes().subscribe(res => {
       this.notes = res as Note[];
-      console.log(res);
       this.listUpdated.next(this.notes.slice());
     });
   }
@@ -109,14 +110,10 @@ export class NoteService {
   }
 
   getMaxId(notes: Note[]) {
-    console.log(this.currentMaxId);
-    console.log(notes);
     notes.forEach( element => {
       if (element.id > this.currentMaxId) {
         this.currentMaxId = element.id;
       } else if (element.notes) {
-        console.log('element: ' + element);
-        console.log('element notes: ' + element.notes);
         this.getMaxId(element.notes);
       }
     });
@@ -137,7 +134,7 @@ export class NoteService {
   deleteNote(index: number) {
     this.notes.splice(index, 1);
     this.listUpdated.next(this.notes.slice());
-
+    this.ds.storeNotes(this.notes.slice());
   }
 
   constructor(private ds: DataStorageService) { }

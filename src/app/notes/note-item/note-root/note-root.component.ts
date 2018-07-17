@@ -38,7 +38,6 @@ export class NoteRootComponent implements OnInit {
       params => {
         this.routingNumber = +params['noteNumber'];
         this.notes = this.ns.getNote(this.routingNumber);
-        console.log(this.routingNumber);
       }
     );
     this.nsSubscription = this.ns.listUpdated.subscribe(

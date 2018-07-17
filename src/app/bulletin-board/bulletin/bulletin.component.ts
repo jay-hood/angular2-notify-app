@@ -16,11 +16,14 @@ export class BulletinComponent implements OnInit {
               public as: AuthService) { }
 
   onDelete(id: number) {
+
     this.bbs.deleteBulletin(id);
-    this.bbs.deleteBulletinFromDatabase();
   }
 
   ngOnInit() {
+    console.log(this.bulletin.id);
+    console.log(this.bulletin.userid);
+    console.log(this.as.currentUserId);
   }
 
 }

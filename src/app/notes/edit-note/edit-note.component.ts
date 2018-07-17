@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormArray, NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NoteService } from '../../shared/services/note.service';
 import { AuthService } from '../../shared/services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Note } from '../../shared/models/note.model';
 import { Response } from '@angular/http';
 import { Subscription } from 'rxjs';
@@ -25,21 +25,17 @@ export class EditNoteComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private noteService: NoteService,
     private auth: AuthService
-  ) {
-
-    }
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(
       (params) => {
         this.editMode = params['noteNumber'] != null;
         this.noteNumber = +params['noteNumber'];
-        // if (this.auth.isAuthenticated()) {
-        //     this.ds.getNotes();
-        // }
       }
     );
     if (this.editMode) {
@@ -51,7 +47,8 @@ export class EditNoteComponent implements OnInit, OnDestroy {
         this.dataisAvailable = true;
         this.depth = 0;
       }
-      this.subscription = this.noteService.listUpdated.subscribe(
+      this.subscription = this.noteService.listUpdated
+      .subscribe(
         (notes: Note[]) => {
           this.notes = [notes[this.noteNumber]];
           this.noteForm = this.fb.group({
@@ -84,15 +81,16 @@ export class EditNoteComponent implements OnInit, OnDestroy {
 
   initArray(notes: Note[]): FormArray {
     const tempArray = new FormArray([]);
-    console.log(notes);
     notes.forEach( entry => {
-      const tempnote = this.fb.group({
-        id: entry.id,
-        details: entry.details,
-        date: entry.date,
-        notes: entry.notes ? this.initArray(entry.notes) : new FormArray([])
-      });
-      tempArray.push(tempnote);
+      if(entry) {
+        const tempnote = this.fb.group({
+          id: entry.id ? entry.id : '',
+          details: entry.details ? entry.details : '',
+          date: entry.date ? entry.date : '',
+          notes: (entry.notes && entry.notes.length!==0) ? this.initArray(entry.notes) : new FormArray([])
+        });
+        tempArray.push(tempnote);
+      }
     });
     return tempArray;
   }
@@ -106,6 +104,7 @@ export class EditNoteComponent implements OnInit, OnDestroy {
       this.noteService.addNote(form.value.notes[0]);
     }
     this.noteService.storeNotesInDatabase();
+    this.router.navigate(['notes', this.noteNumber]);
   }
 
 

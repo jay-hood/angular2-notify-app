@@ -15,7 +15,7 @@
           <button type="submit" class="btn btn-success">Submit</button>
         </form>
       </div>
-      <div *ngFor="let item of bulletinArray">
+      <div *ngFor="let item of (bulletinBoard | async)">
         <app-bulletin [bulletin]="item"></app-bulletin>
       </div>
     </div>

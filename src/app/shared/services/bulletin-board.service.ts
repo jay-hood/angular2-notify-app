@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Bulletin } from '../models/bulletin.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { DataStorageService } from './data-storage.service';
 
@@ -12,6 +12,7 @@ export class BulletinBoardService {
   ) {  }
 
   boardUpdated: Subject<Bulletin[]> = new Subject<Bulletin[]>();
+  bulletinBoard: Observable<Bulletin[]>;
 
   private _board: Bulletin[] = [];
   private max_id = -1;
@@ -20,7 +21,7 @@ export class BulletinBoardService {
     return this._board;
   }
 
-  set board(board: Bulletin[]) {
+  setBoard(board: Bulletin[]) {
     if (board) {
       this._board = board;
       this.getMaxId();
@@ -32,18 +33,21 @@ export class BulletinBoardService {
     const index = this._board.findIndex(obj => obj.id === id);
     this._board.splice(index, 1);
     this.boardUpdated.next(this._board.slice());
+    this.deleteBulletinFromDatabase();
   }
 
   deleteBulletinFromDatabase() {
     this.ds.storeBulletins(this._board.slice());
   }
 
-  getBulletinsFromDatabase() {
-    this.ds.getBulletins().subscribe(bulletin => {
-      console.log(bulletin);
-      this._board = bulletin as Bulletin[];
-      this.boardUpdated.next(this._board.slice());
-    });
+  getBulletinsFromDatabase(): Observable<Bulletin[]> {
+    // this.ds.getBulletins().subscribe(bulletin => {
+    //   console.log(bulletin);
+    //   this._board = bulletin as Bulletin[];
+    //   this.boardUpdated.next(this._board.slice());
+    // });
+    return this.ds.getBulletins() as Observable<Bulletin[]>;
+
   }
 
   storeBulletinsInDatabase() {
@@ -51,8 +55,9 @@ export class BulletinBoardService {
   }
 
   addBulletin(title: string, content: string) {
+    this.getMaxId();
     const bulletin = new Bulletin(this.as.currentUserEmail, title, new Date,
-      content, this.max_id, this.as.currentUserId);
+      content, this.max_id, this.as.currentUserId, []);
     this._board.unshift(bulletin);
     this.boardUpdated.next(this._board.slice());
     this.getMaxId();
@@ -61,10 +66,11 @@ export class BulletinBoardService {
 
   getMaxId() {
     this._board.forEach(bulletin => {
-      if (bulletin.id > this.max_id) {
+      if (bulletin.id >= this.max_id) {
         this.max_id = bulletin.id + 1;
       }
     });
+    console.log(this.max_id);
   }
 
 

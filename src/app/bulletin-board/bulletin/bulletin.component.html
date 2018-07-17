@@ -2,5 +2,6 @@
   <h4>{{bulletin.title}}</h4>
   <p>{{bulletin.poster}}, {{bulletin.postDate | date:'medium'}} </p>
   <p>{{bulletin.content}}</p>
-  <button class="btn btn-primary" *ngIf="bulletin.userid===this.as.userId" (click)="onDelete(bulletin.id)">Delete</button>
+  <button class="btn btn-primary" *ngIf="bulletin.userid===this.as.currentUserId"
+    (click)="onDelete(bulletin.id)">Delete</button>
 </div>

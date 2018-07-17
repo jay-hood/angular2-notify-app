@@ -41,6 +41,7 @@ export class DataStorageService {
     bulletins.remove().then(() => {
       bullets.forEach(bullet => bulletins.push(bullet));
     });
+    console.log(bullets);
 
     // const token = this.auth.currentUserIdToken;
     // console.log(this.bbs.board);
