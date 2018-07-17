@@ -6,6 +6,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Regarding environments/environment.ts
+
+As it would not be prude to expose my api-key for my personal firebase, I suggest making your own firebase and adding its environment details to your environments/environment.ts file, should anyone wish to test this project on their own.
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
