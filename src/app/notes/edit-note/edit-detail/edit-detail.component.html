@@ -4,8 +4,8 @@
         <textarea appResize rows="1" [ngStyle]="{'border-color': inputColor}" class="form-control" formControlName="details">
         </textarea>
         <div class="btn-toolbar">
-          <button class="btn btn-primary" type="button" (click)="onAddChild()">+</button>
-          <button *ngIf="depth>0 && editMode!=false" class="btn btn-danger" type="button" (click)="onDelete()">x</button>
+          <button class="btn btn-primary" id="addChild" type="button" (click)="onAddChild()">+</button>
+          <button *ngIf="depth>0 && editMode!=false" class="btn btn-danger" id="delete" type="button" (click)="onDelete()">x</button>
           <button class="btn btn-danger" type="button" (click)="onDeleteChildren()">xv</button>
         </div>
       </div>

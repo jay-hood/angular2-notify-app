@@ -42,6 +42,7 @@ export class NoteService {
 
   clearNotes() {
     this.notes = new Array<Note>();
+    this.listUpdated.next(this.notes.slice());
   }
 
   replaceNote(noteNumber: number, note: Note) {

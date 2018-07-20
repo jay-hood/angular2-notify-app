@@ -15,9 +15,7 @@ export class AppComponent implements OnInit {
 
   constructor(
               private auth: AuthService,
-              private ns: NoteService) {
-
-  }
+              private ns: NoteService) {}
 
   getsignedInStatus() {
     return this.auth.isAuthenticated;

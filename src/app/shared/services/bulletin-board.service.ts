@@ -17,7 +17,7 @@ export class BulletinBoardService {
   private _board: Bulletin[] = [];
   private max_id = -1;
 
-  get board() {
+  get board(): Bulletin[] {
     return this._board;
   }
 
@@ -29,11 +29,15 @@ export class BulletinBoardService {
     }
   }
 
-  deleteBulletin(id: number) {
+  deleteBulletin(id: number): number {
     const index = this._board.findIndex(obj => obj.id === id);
-    this._board.splice(index, 1);
-    this.boardUpdated.next(this._board.slice());
-    this.deleteBulletinFromDatabase();
+    console.log(index);
+    if(index>-1){
+      this._board.splice(index, 1);
+      this.boardUpdated.next(this._board.slice());
+      this.deleteBulletinFromDatabase();
+    }
+    return index;
   }
 
   deleteBulletinFromDatabase() {
@@ -50,27 +54,33 @@ export class BulletinBoardService {
 
   }
 
-  storeBulletinsInDatabase() {
+  storeBulletinsInDatabase(): void {
     this.ds.storeBulletins(this._board.slice());
   }
 
   addBulletin(title: string, content: string) {
     this.getMaxId();
+    if(title === (undefined || null)){
+      title = '';
+    }
+    if(content === (undefined || null)){
+      content = '';
+    }
     const bulletin = new Bulletin(this.as.currentUserEmail, title, new Date,
       content, this.max_id, this.as.currentUserId, []);
     this._board.unshift(bulletin);
     this.boardUpdated.next(this._board.slice());
     this.getMaxId();
-    console.log('bulletin successfully added');
+    return bulletin;
   }
 
-  getMaxId() {
+  getMaxId(): number {
     this._board.forEach(bulletin => {
       if (bulletin.id >= this.max_id) {
         this.max_id = bulletin.id + 1;
       }
     });
-    console.log(this.max_id);
+    return this.max_id;
   }
 
 

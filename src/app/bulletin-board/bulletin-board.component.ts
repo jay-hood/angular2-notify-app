@@ -4,6 +4,8 @@ import { BulletinBoardService } from '../shared/services/bulletin-board.service'
 import { Bulletin } from '../shared/models/bulletin.model';
 import { Subscription, Observable } from 'rxjs';
 
+// Make it so that the service itself has a function that subscribes only once
+// and sets its own subscription without board setting being dictated by the component
 @Component({
   selector: 'app-bulletin-board',
   templateUrl: './bulletin-board.component.html',
@@ -25,13 +27,6 @@ export class BulletinBoardComponent implements OnInit {
   bulletinArray: Bulletin[] = [];
 
   ngOnInit() {
-    // this.bulletinArray = this.bb.board;
-    // this.bb.getBulletinsFromDatabase();
-    // this.bulletinBoardSubscription = this.bb.boardUpdated.subscribe(
-    //   (board: Bulletin[]) => {
-    //     this.bulletinArray = board;
-    //     console.log(board);
-    //   });
     this.bulletinBoard = this.bb.getBulletinsFromDatabase();
     this.bb.getBulletinsFromDatabase().subscribe(res => this.bb.setBoard(res));
   }

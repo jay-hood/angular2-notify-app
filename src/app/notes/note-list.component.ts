@@ -18,7 +18,6 @@ export class NoteListComponent implements OnInit {
 
   notes: Note[];
   index: number;
-  private signInSubscription: Subscription;
   private subscription: Subscription;
 
   constructor(

@@ -28,7 +28,7 @@ export class EditNoteComponent implements OnInit, OnDestroy {
     private router: Router,
     private fb: FormBuilder,
     private noteService: NoteService,
-    private auth: AuthService
+    // private auth: AuthService
   ) {}
 
   ngOnInit() {

@@ -14,8 +14,8 @@ import { Response } from '@angular/http';
 })
 export class NoteComponent {
   @Input() notes: Note[] = [];
-  @Input() prevNote: Note;
-  @Input() editMode: boolean;
+  @Input() prevNote: Note = null;
+  @Input() editMode: boolean = false;
   @Input() isCollapsed = false;
 
 

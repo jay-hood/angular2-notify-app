@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class NoteRootComponent implements OnInit {
 
   notes: Note[] = [];
+  myParams: any;
   routingNumber: number;
   editMode = false;
   editModeStr: string;
@@ -46,6 +47,7 @@ export class NoteRootComponent implements OnInit {
       }
     );
   }
+
 
 
 }
