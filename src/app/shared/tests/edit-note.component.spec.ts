@@ -51,7 +51,6 @@ describe('EditNote Component', () => {
   it('should initialize notes from service', () => {
     fixture.detectChanges();
     expect(component.notes).toBeDefined();
-    console.log(component.notes);
   });
 
   it('#initArray should have been called', () => {

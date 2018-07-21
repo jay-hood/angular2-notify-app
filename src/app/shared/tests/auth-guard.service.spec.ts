@@ -10,7 +10,7 @@ describe('Auth-Guard Service', () => {
   let aus: AuthService;
   let rtr: Router;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     let authServiceStub = {
       isAuthenticated: false
     };
@@ -19,7 +19,7 @@ describe('Auth-Guard Service', () => {
       providers: [AuthGuardService, {provide: AuthService, useValue: authServiceStub}]
     });
     mockSnapshot = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
-  }));
+  });
 
   beforeEach(async(inject([AuthGuardService, AuthService, Router],
     (guard, auth, router) => {

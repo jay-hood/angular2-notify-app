@@ -18,7 +18,7 @@ export class AuthService {
   constructor(
     private router: Router,
     public db: AngularFireDatabase,
-    private afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth
   ) {
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
