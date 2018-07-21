@@ -6,8 +6,8 @@ export class mockActivatedRoute {
 }
 
 export let authState = {
-  email: 'test@test.com',
-  password: 'testpassword',
+  email: 'note@note.com',
+  password: 'notespassword',
   loggedin: false
 }
 
